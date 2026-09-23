@@ -284,6 +284,8 @@
   .ev .title { font-weight: 700; }
   .ev .note { font-size: 13px; color: var(--ink-soft); }
   .ev.pending .title { color: var(--pending); font-weight: 500; }
+  .ev .map { font-size: 12px; color: var(--sea); text-decoration: none; }
+  .ev .map:hover { text-decoration: underline; }
   .ev .tag {
     display: inline-block; font-size: 11px; font-family: var(--mono);
     padding: 0 6px; border-radius: 4px; margin-left: 6px; vertical-align: 2px;
@@ -324,7 +326,8 @@
     <div class="meta">
       <span class="pill" id="countdown">出發倒數 <b>—</b> 天</span>
       <span class="pill">時差 <b>+1h</b>（沖繩比台灣快）</span>
-      <span class="pill">航空 <b>CI</b> 中華航空</span>
+      <span class="pill">同行 <b>6</b> 人</span>
+      <span class="pill">交通 <b>租車</b>・住那霸</span>
     </div>
     <svg class="shore" viewBox="0 0 720 72" aria-hidden="true">
       <path class="w1" d="M0 11 Q 30.0 -3 60.0 11 Q 90.0 25 120.0 11 Q 150.0 -3 180.0 11 Q 210.0 25 240.0 11 Q 270.0 -3 300.0 11 Q 330.0 25 360.0 11 Q 390.0 -3 420.0 11 Q 450.0 25 480.0 11 Q 510.0 -3 540.0 11 Q 570.0 25 600.0 11 Q 630.0 -3 660.0 11 Q 690.0 25 720.0 11"/>
@@ -391,39 +394,64 @@
     { icon: "checked", name: "托運行李", count: 1, kg: 23, dim: "三邊合計 ≤ 158 cm", rule: "機場報到櫃檯托運" }
   ];
 
+  // map：Google 地圖搜尋用的日文名稱，導航時直接點「地圖」
   const days = [
     {
-      date: "2027-03-25", title: "抵達那霸",
+      date: "2027-03-25", title: "南部・那霸",
       events: [
         { t: "06:10", title: "抵達桃園機場 T2", note: "建議起飛前 2 小時到，辦理報到與托運", tag: "台灣時間", type: "alert" },
         { t: "08:10", title: "CI120 起飛 → 那霸", note: "經濟艙 · A321neo · 含餐點", type: "flight" },
         { t: "10:50", title: "抵達那霸機場", note: "入境、領行李", type: "flight" },
-        { t: "12:30", title: "午餐待安排", type: "food pending" },
-        { t: "午後", title: "待安排", type: "pending" },
-        { t: "晚上", title: "住宿待訂", type: "pending" }
+        { t: "11:40", title: "取車", note: "搭租車公司接駁車到營業所，辦手續約 30–60 分鐘", type: "alert" },
+        { t: "12:30", title: "瀨長島 Umikaji Terrace", note: "機場旁的白色小島，海景餐廳、甜點一排，吃午餐順便看飛機起降（車程約 15 分）", type: "food", map: "瀬長島ウミカジテラス" },
+        { t: "14:30", title: "齋場御嶽", note: "世界遺產、琉球最神聖的祭祀場所，走一圈約 1 小時；石板路有坡，穿好走的鞋（車程約 40 分）", map: "斎場御嶽" },
+        { t: "15:45", title: "知念岬公園", note: "就在齋場御嶽旁，海岬步道看久高島與太平洋", map: "知念岬公園" },
+        { t: "16:30", title: "新原海灘・玻璃船", note: "看熱帶魚不用下水，長輩也輕鬆；約 30 分鐘一班，船班以現場為準（時間不夠可略）", map: "みーばるマリンセンター" },
+        { t: "18:00", title: "回那霸，飯店入住", note: "車程約 40 分，傍晚那霸市區容易塞車", map: "那覇市" },
+        { t: "19:00", title: "晚餐：ゆうなんぎい", note: "國際通旁的老字號沖繩家庭料理，苦瓜炒什錦、滷豬腳、紅芋天婦羅；店面小，6 人務必先電話訂位", type: "food", map: "ゆうなんぎい 那覇" },
+        { t: "20:30", title: "逛國際通", note: "步行即到，伴手禮、紅芋塔、Blue Seal 冰淇淋", map: "国際通り 那覇" }
       ]
     },
     {
-      date: "2027-03-26", title: "待規劃",
+      date: "2027-03-26", title: "北部・美ら海",
       events: [
-        { t: "上午", title: "待安排", type: "pending" },
-        { t: "下午", title: "待安排", type: "pending" },
-        { t: "晚上", title: "住宿待訂", type: "pending" }
+        { t: "08:00", title: "從那霸出發", note: "走沖繩自動車道到許田 IC，全程約 2 小時；早餐在便利商店解決", type: "alert" },
+        { t: "10:00", title: "沖繩美麗海水族館", note: "黑潮之海的鯨鯊必看；海洋博公園內的海豚表演免費，出發前查場次", map: "沖縄美ら海水族館" },
+        { t: "12:30", title: "午餐：岸本食堂", note: "創業百年的沖繩麵老店，柴火湯頭＋手打麵，搭配炊飯（車程約 15 分）", type: "food", map: "きしもと食堂 本部町" },
+        { t: "13:45", title: "備瀨福木林道", note: "水族館旁的老聚落，福木樹隧道通到海邊，可租腳踏車", map: "備瀬のフクギ並木" },
+        { t: "15:00", title: "古宇利大橋・古宇利島", note: "開上跨海大橋，心形岩（Tinu 海灘）拍照（車程約 30 分）", map: "古宇利大橋" },
+        { t: "15:45", title: "點心：古宇利島蝦蝦飯", note: "島上人氣餐車，蒜香奶油蝦飯；6 人可以點幾份分著吃", type: "food", map: "KOURI SHRIMP 古宇利島" },
+        { t: "17:45", title: "萬座毛", note: "象鼻岩海崖，3 月底日落約 18:50，可以待到夕陽（車程約 50 分）", map: "万座毛" },
+        { t: "19:00", title: "晚餐：Seaside Drive-in", note: "恩納村 1967 年開業的美式餐廳，招牌濃湯與塔可飯（車程約 10 分）", type: "food", map: "シーサイドドライブイン 恩納村" },
+        { t: "20:30", title: "回那霸", note: "走高速約 1 小時" }
       ]
     },
     {
-      date: "2027-03-27", title: "待規劃",
+      date: "2027-03-27", title: "中部・海中道路・美國村",
       events: [
-        { t: "上午", title: "待安排", type: "pending" },
-        { t: "下午", title: "待安排", type: "pending" },
-        { t: "晚上", title: "住宿待訂", type: "pending" }
+        { t: "09:00", title: "首里城公園", note: "正殿重建預計 2026 年完工，出發前確認開放範圍", map: "首里城公園" },
+        { t: "11:00", title: "午餐：King Tacos 金武本店", note: "塔可飯的發源地，分量很大，可以兩人分一份（車程約 50 分）", type: "food", map: "キングタコス 金武本店" },
+        { t: "13:00", title: "海中道路", note: "跨海的長直路，中途「海之驛 Ayahashi 館」可以停車看海（車程約 30 分）", map: "海中道路" },
+        { t: "13:45", title: "宮城島 Nuchi Masu 製鹽所", note: "免費參觀製鹽工廠，後方「果報崖」是絕景海崖", map: "ぬちうなー" },
+        { t: "15:15", title: "勝連城跡", note: "世界遺產，城牆上可以看整片中城灣（車程約 30 分）", map: "勝連城跡" },
+        { t: "16:45", title: "北谷美國村", note: "摩天輪、美式街區，Blue Seal 冰淇淋本店在附近（車程約 40 分）", map: "美浜アメリカンビレッジ" },
+        { t: "18:30", title: "日落海灘看夕陽", note: "美國村旁，日落約 18:50", map: "サンセットビーチ 北谷" },
+        { t: "19:15", title: "晚餐：美國村海景餐廳", note: "牛排、漢堡、海鮮都有，可以現場挑", type: "food", map: "美浜アメリカンビレッジ" },
+        { t: "20:45", title: "回那霸", note: "車程約 40 分" }
       ]
     },
     {
-      date: "2027-03-28", title: "返回台北",
+      date: "2027-03-28", title: "那霸市區・返台",
       events: [
-        { t: "白天", title: "待安排", note: "晚班機，白天還有大半天可以玩", type: "pending" },
-        { t: "18:55", title: "抵達那霸機場 國際線", note: "建議起飛前 2 小時到；租車的話記得先還車加油", type: "alert" },
+        { t: "08:30", title: "早餐：豬肉蛋飯糰本店", note: "Pork Tamago Onigiri，牧志市場旁，開門就排隊", type: "food", map: "ポークたまごおにぎり本店" },
+        { t: "09:30", title: "壺屋陶器街", note: "沖繩燒陶器小店，挑碗盤、風獅爺", map: "壺屋やちむん通り" },
+        { t: "11:00", title: "退房、行李放車上", type: "alert" },
+        { t: "11:30", title: "第一牧志公設市場", note: "一樓買海鮮，拿到二樓餐廳代客料理當午餐（夜光貝、龍蝦、海葡萄）", type: "food", map: "第一牧志公設市場" },
+        { t: "13:30", title: "波上宮", note: "蓋在海崖上的神社，旁邊就是波之上海灘", map: "波上宮" },
+        { t: "15:00", title: "最後採買", note: "國際通補伴手禮，或去 iias 沖繩豐崎（離機場近）", map: "iias沖縄豊崎" },
+        { t: "16:30", title: "晚餐：Jack's Steak House", note: "1953 年開業的老牛排館，不能訂位，4 點多人還不多；吃完再去還車", type: "food", map: "ジャッキーステーキハウス" },
+        { t: "17:45", title: "加滿油、還車", note: "租車公司會檢查油量，再搭接駁車到機場", type: "alert" },
+        { t: "18:55", title: "抵達那霸機場 國際線", note: "建議起飛前 2 小時到", type: "alert" },
         { t: "20:55", title: "CI123 起飛 → 桃園", note: "經濟艙 · A321neo · 含餐點", type: "flight" },
         { t: "21:30", title: "抵達桃園機場 T2", type: "flight", tag: "台灣時間" }
       ]
@@ -431,8 +459,10 @@
   ];
 
   const todos = [
-    { id: "hotel", text: "訂住宿（3 晚）" },
-    { id: "transport", text: "決定交通：租車 or 單軌電車＋巴士", why: "租車需要駕照＋日文譯本（監理站可辦）" },
+    { id: "hotel", text: "訂住宿：那霸市區 3 晚、6 人", why: "三間雙人房或一間公寓式整層；確認有停車場，以及停車費" },
+    { id: "booking", text: "餐廳訂位：ゆうなんぎい、Seaside Drive-in", why: "6 人一桌很難現場排，能訂位的先訂" },
+    { id: "car", text: "預約租車：6 人＋行李要 8 人座以上大車，或租兩台", why: "3/25 機場取車、3/28 機場還車；每位駕駛都要帶台灣駕照正本＋日文譯本（監理站可辦）" },
+    { id: "tickets", text: "預買美麗海水族館門票", why: "網路或便利商店買，現場少排一次隊" },
     { id: "esim", text: "網路：eSIM / 網卡" },
     { id: "jpy", text: "換日幣" },
     { id: "insurance", text: "旅平險" }
@@ -488,7 +518,7 @@
       <ol class="tl">${d.events.map(e => `
         <li class="ev ${e.type || ""}">
           <div class="t">${esc(e.t)}</div>
-          <div class="body"><div class="title">${esc(e.title)}${e.tag ? `<span class="tag">${esc(e.tag)}</span>` : ""}</div>${e.note ? `<div class="note">${esc(e.note)}</div>` : ""}</div>
+          <div class="body"><div class="title">${esc(e.title)}${e.tag ? `<span class="tag">${esc(e.tag)}</span>` : ""}</div>${e.note ? `<div class="note">${esc(e.note)}</div>` : ""}${e.map ? `<a class="map" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.map)}" target="_blank" rel="noopener">地圖 ↗</a>` : ""}</div>
         </li>`).join("")}
       </ol>
     </section>`).join("");
