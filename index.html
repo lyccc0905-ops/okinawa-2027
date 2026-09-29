@@ -195,6 +195,23 @@
   .stub .fn { font-family: var(--mono); font-weight: 600; font-size: 20px; color: var(--sea); }
   .stub .dt { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
 
+  /* ---------- hotel ---------- */
+  .hotel {
+    background: var(--paper); border-radius: 18px; box-shadow: var(--shadow);
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); overflow: hidden;
+  }
+  .hotel-main { background: var(--sea-tint); padding: 18px; display: flex; flex-direction: column; gap: 4px; }
+  .hotel-name { font-family: var(--serif); font-weight: 700; font-size: 20px; color: var(--sea); line-height: 1.35; }
+  .hotel-sub { font-size: 13px; color: var(--ink-soft); }
+  .hotel-map { margin-top: auto; padding-top: 10px; font-size: 13px; color: var(--sea); font-weight: 500; text-decoration: none; }
+  .hotel-map:hover { text-decoration: underline; }
+  .hotel-facts { margin: 0; padding: 12px 18px; display: grid; gap: 0; }
+  .hotel-facts div { display: grid; grid-template-columns: 4.5em 1fr; gap: 10px; padding-block: 6px; }
+  .hotel-facts div + div { border-top: 1px solid var(--line); }
+  .hotel-facts dt { font-size: 12px; color: var(--ink-soft); padding-top: 2px; }
+  .hotel-facts dd { margin: 0; font-size: 14px; }
+  @media (max-width: 560px) { .hotel { grid-template-columns: 1fr; } }
+
   /* ---------- baggage ---------- */
   .bags {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
@@ -218,7 +235,7 @@
     .bag .name, .bag .dim, .bag .rule { grid-column: 2; }
   }
 
-  .infos { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; }
+  .infos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
   .info {
     background: var(--paper); border-radius: 18px; box-shadow: var(--shadow);
     padding: 12px 16px; display: flex; flex-direction: column; gap: 2px; min-width: 0;
@@ -375,6 +392,23 @@
   <h2>航班 <span class="sub">時間皆為當地時間</span></h2>
   <div class="passes" id="passes"></div>
 
+  <h2>住宿 <span class="sub">3/25–3/28・3 晚</span></h2>
+  <article class="hotel">
+    <div class="hotel-main">
+      <div class="hotel-name">JR九州ホテル ブラッサム那覇</div>
+      <div class="hotel-sub">那霸市牧志 2-16-1・國際通旁，走路 1 分</div>
+      <a class="hotel-map" href="https://www.google.com/maps/search/?api=1&query=JR%E4%B9%9D%E5%B7%9E%E3%83%9B%E3%83%86%E3%83%AB%20%E3%83%96%E3%83%A9%E3%83%83%E3%82%B5%E3%83%A0%E9%82%A3%E8%A6%87" target="_blank" rel="noopener">地圖・導航 ↗</a>
+    </div>
+    <dl class="hotel-facts">
+      <div><dt>入住</dt><dd>3/25（四）15:00 起</dd></div>
+      <div><dt>退房</dt><dd>3/28（日）11:00 前</dd></div>
+      <div><dt>房間</dt><dd>3 房・6 人</dd></div>
+      <div><dt>早餐</dt><dd>不含；1F Barbaresco 37 自助早餐 6:30–10:00，可另外付費</dd></div>
+      <div><dt>停車</dt><dd>機械式停車場 ¥1,500／晚（15:00–隔天 11:00）</dd></div>
+      <div><dt>車輛限制</dt><dd>高 2.1m、寬 1.9m、長 5.3m、重 2 噸以下；23:00–6:00 不能進出車</dd></div>
+    </dl>
+  </article>
+
   <h2>行李額度 <span class="sub">每人・去回程相同</span></h2>
   <div class="bags" id="bags"></div>
   <div class="infos">
@@ -382,11 +416,6 @@
       <span class="k">入境手續</span>
       <b>Visit Japan Web ↗</b>
       <small>入境審查與海關 QR code</small>
-    </a>
-    <a class="info" href="https://www.google.com/maps/search/?api=1&query=JR%E4%B9%9D%E5%B7%9E%E3%83%9B%E3%83%86%E3%83%AB%20%E3%83%96%E3%83%A9%E3%83%83%E3%82%B5%E3%83%A0%E9%82%A3%E8%A6%87" target="_blank" rel="noopener">
-      <span class="k">住宿・3 晚</span>
-      <b>JR九州ホテル ブラッサム那覇 ↗</b>
-      <small>入住 15:00・退房 11:00・停車 ¥1,500／晚</small>
     </a>
     <div class="info">
       <span class="k">日幣匯率</span>
