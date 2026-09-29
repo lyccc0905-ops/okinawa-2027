@@ -275,16 +275,16 @@
 
   ol.tl { list-style: none; margin: 0; padding: 0; position: relative; }
   ol.tl::before {
-    content: ""; position: absolute; left: 62px; top: 8px; bottom: 8px;
+    content: ""; position: absolute; left: 71px; top: 8px; bottom: 8px;
     width: 2px; background: var(--line);
   }
-  .ev { display: grid; grid-template-columns: 52px 1fr; gap: 0 22px; padding-block: 8px; position: relative; }
+  .ev { display: grid; grid-template-columns: 52px 1fr; gap: 0 40px; padding-block: 8px; position: relative; }
   .ev .t {
     font-family: var(--mono); font-size: 13px; text-align: right; padding-top: 1px;
     font-variant-numeric: tabular-nums; color: var(--ink-soft);
   }
   .ev::after {
-    content: ""; position: absolute; left: 57px; top: 14px;
+    content: ""; position: absolute; left: 66px; top: 14px;
     width: 12px; height: 12px; border-radius: 50%;
     background: var(--ground); border: 2px solid var(--sea);
   }
@@ -326,8 +326,12 @@
     list-style: none;
   }
   .shops summary::-webkit-details-marker { display: none; }
-  .shops summary::after { content: "▾"; font-size: 10px; transition: transform .15s; }
-  .shops[open] summary::after { transform: rotate(180deg); }
+  .shops summary::after {
+    content: ""; width: 6px; height: 6px; margin: -3px 2px 0;
+    border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg); transition: transform .15s;
+  }
+  .shops[open] summary::after { transform: rotate(225deg); margin-top: 3px; }
   .shops summary:focus-visible { outline: 2px solid var(--sea); outline-offset: 2px; }
   .shops ul {
     list-style: none; margin: 8px 0 4px; padding: 4px 12px;
