@@ -523,14 +523,6 @@
       S("ミュージアムショップ球陽", ["工藝"], "城內付費區，傳統工藝與原創品", "8:30–18:00", "ミュージアムショップ球陽"),
       S("首里染織館 suikara", ["工藝"], "紅型、首里織展示與限定商品；10:30 才開，時間夠再去", "10:30–18:00・週二公休", "首里染織館 suikara")
     ],
-    chatan: [
-      S("HabuBox 美浜", ["服飾"], "沖繩 T 恤先驅品牌，原創圖案", "11:00–21:00・無公休", "HabuBox 美浜 デポアイランド"),
-      S("Royal Okinawan", ["服飾"], "沖繩在地熱帶花紋襯衫", "12:00–21:00・不定休", "Royal Okinawan 北谷"),
-      S("長七屋 北谷デポアイランド店", ["飾品"], "沖繩螢火蟲玻璃工房直營", "10:00–21:00", "長七屋 北谷デポアイランド店"),
-      S("ISLAND RHYTHM OKINAWA", ["服飾", "鞋"], "海灘風服飾、夾腳拖、手作飾品", "10:00–21:00・無公休", "ISLAND RHYTHM OKINAWA 北谷"),
-      S("OKI★ROCK", ["鞋", "服飾"], "Dr.Martens、Fred Perry 選品；19:00 關，先逛", "11:00–19:00", "OKI★ROCK デポアイランド"),
-      S("B.B.B.", ["飾品", "包"], "可愛系飾品、包包、沖繩製保養品", "約 10:00–21:00", "B.B.B. デポアイランド")
-    ],
     minatogawa: [
       S("PORTRIVER MARKET", ["選品"], "沖繩衣食住選品＋原創飾品，港川代表店", "12:00–18:00・週日、週三公休", "PORTRIVER MARKET 港川")
     ],
@@ -598,11 +590,6 @@
     miyagi: [
       S("ぬちまーすカフェ たかはなり", ["咖啡", "甜點"], "果報崖上海拔 60 公尺的絕景，鹽味霜淇淋", "10:00–17:00・無公休", "たかはなり 宮城島")
     ],
-    chatan: [
-      S("THE CALIF KITCHEN", ["甜點", "咖啡"], "加州風海景，粉雪刨冰、鬆餅；建議網路訂位", "8:00–22:00", "ザ・カリフキッチン 北谷"),
-      S("ZHYVAGO COFFEE WORKS", ["咖啡"], "美國西岸風咖啡站，冷萃咖啡配夕陽", "9:00–日落", "ZHYVAGO COFFEE WORKS 北谷"),
-      S("Blue Seal 北谷店", ["甜點"], "香蕉船、Blue Seal 聖代，有停車場", "11:00–22:00・無公休", "ブルーシール 北谷店")
-    ],
     naminoue: [
       S("千日", ["甜點"], "45 年老店，25 公分高的綿綿冰；6 人一桌剛好，只收現金", "11:30–19:00・週一公休", "千日 久米 ぜんざい"),
       S("富士家 泊本店", ["甜點"], "紅豆糖漿冰的富士家ぜんざい，有停車場", "10:00–19:00・無公休", "富士家 泊本店")
@@ -614,6 +601,13 @@
       S("Blue Seal 豐崎店", ["甜點"], "iias 旁的 Tomiton 裡，鹽味金楚糕冰淇淋", "11:00–21:00・無公休", "ブルーシール 豊崎店")
     ]
   };
+
+  // Day 3 晚餐的其他選擇（都已確認週六營業）
+  const DINNER_ALT = [
+    S("琉球料理 美榮", ["琉球料理"], "老字號琉球宮廷料理，全個室；18:00 才開，完全預約制，套餐 ¥11,000 起", "18:00–22:00・週日公休・098-867-1356", "琉球料理 美榮 那覇 久茂地"),
+    S("金とん 松山本店", ["阿古豬涮涮鍋"], "純種阿古豬涮涮鍋，有 12 人榻榻米包廂；約 ¥5,000–8,000", "17:00–22:30・不定休・098-963-7722", "金とん 松山本店 那覇"),
+    S("焼肉 琉球の牛 那覇国際通り", ["燒肉"], "沖繩縣產和牛燒肉，就在國際通上，沒有包廂；約 ¥8,000–10,000", "17:00 起・無公休・098-987-6150", "焼肉 琉球の牛 那覇国際通り")
+  ];
 
   const days = [
     {
@@ -645,18 +639,17 @@
       ]
     },
     {
-      date: "2027-03-27", title: "中部・海中道路・港川・美國村",
+      date: "2027-03-27", title: "中部・海中道路・港川",
       events: [
         { t: "09:00", title: "首里城公園", note: "正殿 2026/11/23 重新開放；進正殿要先上網預約 30 分鐘時段（一個月前開放），其他區域不用預約", hours: "付費區 8:30–18:00・17:30 最後入場", map: "首里城公園", shops: SHOPS.shuri, cafes: CAFES.shuri },
         { t: "11:00", title: "午餐：King Tacos 金武本店", note: "塔可飯的發源地，分量很大，可以兩人分一份（車程約 50 分）", hours: "10:30–21:00・無公休", type: "food", map: "キングタコス 金武本店" },
         { t: "12:15", title: "海中道路", note: "跨海的長直路，中途「海之驛 Ayahashi 館」可以停車看海，停一下拍照就好（車程約 30 分）", hours: "Ayahashi 館 9:00–17:30", map: "海中道路", cafes: CAFES.kaichu },
         { t: "12:45", title: "宮城島 Nuchi Masu 製鹽所", note: "每整點與半點有免費導覽，後方「果報崖」是絕景海崖", hours: "9:00–17:30・無公休", map: "ぬちうなー", cafes: CAFES.miyagi },
-        { t: "14:15", title: "勝連城跡", note: "世界遺產，城牆上可以看整片中城灣；上坡路段可視體力走一半（車程約 25 分）", hours: "9:00–18:00・17:30 停止售票・無公休", map: "勝連城跡" },
+        { t: "14:15", title: "勝連城跡", note: "世界遺產，城牆上可以看整片中城灣；上坡路段可視體力走一半；不用趕，慢慢逛（車程約 25 分）", hours: "9:00–18:00・17:30 停止售票・無公休", map: "勝連城跡" },
         { t: "15:45", title: "港川外人住宅", note: "美軍舊宿舍改成的小店街，街道以美國州名命名，平路好逛；各店門口停車位少，大車停附近投幣停車場（車程約 45 分）", hours: "多數店家約 11:00–18:00，公休日各店不同", map: "港川ステイツサイドタウン", shops: SHOPS.minatogawa, cafes: CAFES.minatogawa },
-        { t: "17:00", title: "北谷美國村", note: "摩天輪、美式街區，Blue Seal 冰淇淋北谷店在這裡；店家多開到 21:00，看完夕陽還能再逛（車程約 15 分）", hours: "Blue Seal 11:00–22:00", map: "美浜アメリカンビレッジ", shops: SHOPS.chatan, cafes: CAFES.chatan },
-        { t: "17:30", title: "晚餐：美國村海景餐廳", note: "牛排、漢堡、海鮮都有，可以現場挑", type: "food", map: "美浜アメリカンビレッジ" },
-        { t: "18:30", title: "日落海灘看夕陽", note: "吃完走過去就到，日落約 18:45", map: "サンセットビーチ 北谷" },
-        { t: "19:15", title: "回那霸", note: "車程約 40 分；飯店停車場 23:00 後不能進出車" }
+        { t: "16:55", title: "回飯店停車", note: "從港川開回飯店約 20–25 分，車停好後走路去吃晚餐", type: "alert", map: "JR九州ホテル ブラッサム那覇" },
+        { t: "17:30", title: "晚餐：うりずん", note: "1972 年創業的古酒與琉球料理老店，どぅる天發源店、食べログ百名店；17:30 準時開門。先電話 098-885-2178 訂位，指定 1 樓桌席（2 樓是要坐地上的榻榻米）。從飯店走路約 15 分", hours: "17:30–24:00・無公休", type: "food", map: "うりずん 那覇 安里 栄町", alts: DINNER_ALT },
+        { t: "19:00", title: "自由時間", note: "回飯店休息，或到國際通散步" }
       ]
     },
     {
@@ -680,7 +673,7 @@
 
   const todos = [
     { id: "parking", text: "打電話給飯店，確認機械式停車場能不能先預約", why: "JR九州ホテル ブラッサム那覇，限高 2.1m、寬 1.9m、長 5.3m、重 2 噸" },
-    { id: "booking", text: "餐廳訂位：ゆうなんぎい 3/25 17:00（098-867-3765）、Seaside Drive-in 3/26 17:15（098-964-2272）", why: "6 人一桌很難現場排，能訂位的先訂" },
+    { id: "booking", text: "餐廳訂位：ゆうなんぎい 3/25 17:00（098-867-3765）、Seaside Drive-in 3/26 17:15（098-964-2272）、うりずん 3/27 17:30 1 樓桌席（098-885-2178）", why: "6 人一桌很難現場排，能訂位的先訂" },
     { id: "shuri", text: "2 月底預約首里城正殿：3/27 09:00 時段、6 人", why: "官網線上預約，一個月前開放" },
     { id: "car", text: "預約租車：8 人座 Noah／Voxy／Serena 這類車", why: "要停得進飯店停車場（高 2.1m、重 2 噸以下），Alphard、Hiace 停不進去；3/25 機場取車、3/28 機場還車；每位駕駛都要帶台灣駕照正本＋日文譯本" },
     { id: "tickets", text: "預買美麗海水族館門票", why: "網路或便利商店買，現場少排一次隊" },
@@ -791,7 +784,7 @@
       <ol class="tl">${d.events.map(e => `
         <li class="ev ${e.type || ""}">
           <div class="t">${esc(e.t)}</div>
-          <div class="body"><div class="title">${esc(e.title)}${e.tag ? `<span class="tag">${esc(e.tag)}</span>` : ""}</div>${e.note ? `<div class="note">${esc(e.note)}</div>` : ""}${e.hours ? `<div class="hours">營業 ${esc(e.hours)}</div>` : ""}${e.shops ? shopsHtml(e.shops) : ""}${e.cafes ? shopsHtml(e.cafes, "甜點・咖啡", "cafes") : ""}${e.map ? `<a class="map" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.map)}" target="_blank" rel="noopener">地圖 ↗</a>` : ""}</div>
+          <div class="body"><div class="title">${esc(e.title)}${e.tag ? `<span class="tag">${esc(e.tag)}</span>` : ""}</div>${e.note ? `<div class="note">${esc(e.note)}</div>` : ""}${e.hours ? `<div class="hours">營業 ${esc(e.hours)}</div>` : ""}${e.shops ? shopsHtml(e.shops) : ""}${e.cafes ? shopsHtml(e.cafes, "甜點・咖啡", "cafes") : ""}${e.alts ? shopsHtml(e.alts, "其他晚餐選擇", "cafes") : ""}${e.map ? `<a class="map" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.map)}" target="_blank" rel="noopener">地圖 ↗</a>` : ""}</div>
         </li>`).join("")}
       </ol>
     </section>`).join("");
