@@ -212,10 +212,10 @@
   /* ---------- hotel ---------- */
   .hotel {
     background: var(--paper); border-radius: 18px; box-shadow: var(--shadow);
-    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); overflow: hidden;
+    display: grid; grid-template-columns: auto minmax(0, 1fr); overflow: hidden;
   }
   .hotel-main { background: var(--sea-tint); padding: 18px; display: flex; flex-direction: column; gap: 4px; }
-  .hotel-name { font-family: var(--serif); font-weight: 700; font-size: 20px; color: var(--sea); line-height: 1.35; }
+  .hotel-name { font-family: var(--serif); font-weight: 700; font-size: clamp(17px, 4.8vw, 20px); color: var(--sea); line-height: 1.35; white-space: nowrap; }
   .hotel-sub { font-size: 13px; color: var(--ink-soft); }
   .hotel-map { margin-top: auto; padding-top: 10px; font-size: 13px; color: var(--sea); font-weight: 500; text-decoration: none; }
   .hotel-map:hover { text-decoration: underline; }
@@ -224,7 +224,7 @@
   .hotel-facts div + div { border-top: 1px solid var(--line); }
   .hotel-facts dt { font-size: 12px; color: var(--ink-soft); padding-top: 2px; }
   .hotel-facts dd { margin: 0; font-size: 14px; }
-  @media (max-width: 560px) { .hotel { grid-template-columns: 1fr; } }
+  @media (max-width: 680px) { .hotel { grid-template-columns: 1fr; } }
 
   /* ---------- baggage ---------- */
   .bags {
