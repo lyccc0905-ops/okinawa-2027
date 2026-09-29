@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>沖繩地圖行程</title>
+<meta name="description" content="沖繩四天三夜地圖版：每天去哪裡玩，一張圖看懂。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@400;700&display=swap">
+<style>
+  :root {
+    --sea: #bfe5e1;
+    --sea-deep: #8fcdc7;
+    --sea-line: #ffffff;
+    --land: #fbf3df;
+    --land-edge: #e7d3a8;
+    --paper: #fffdf7;
+    --ground: #faf8f2;
+    --ink: #30434a;
+    --ink-soft: #66777c;
+    --title: #176b78;
+    --d1: #ef8e6c;
+    --d2: #2c8a95;
+    --d3: #e0a93b;
+    --d4: #9a86c8;
+    --shadow: 0 2px 0 rgba(48, 67, 74, .12), 0 12px 28px -18px rgba(23, 107, 120, .35);
+    --round: "Huninn", "Noto Sans TC", "PingFang TC", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --sea: #173d42; --sea-deep: #1e4d53; --sea-line: #2c6166;
+      --land: #2a2a22; --land-edge: #4d4636;
+      --paper: #1c2527; --ground: #111a1c;
+      --ink: #e5ecea; --ink-soft: #a3b3b1; --title: #7fd0d8;
+      --shadow: 0 2px 0 rgba(0,0,0,.4), 0 12px 28px -18px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --sea: #173d42; --sea-deep: #1e4d53; --sea-line: #2c6166;
+    --land: #2a2a22; --land-edge: #4d4636;
+    --paper: #1c2527; --ground: #111a1c;
+    --ink: #e5ecea; --ink-soft: #a3b3b1; --title: #7fd0d8;
+    --shadow: 0 2px 0 rgba(0,0,0,.4), 0 12px 28px -18px rgba(0,0,0,.8);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--round); line-height: 1.6;
+    padding-inline: 16px; padding-block: 0 56px;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  header { text-align: center; padding-block: 36px 18px; }
+  .ribbon {
+    display: inline-block; position: relative;
+    background: var(--paper); border: 3px solid var(--ink); border-radius: 18px;
+    padding: 10px 26px; box-shadow: 0 5px 0 var(--ink);
+  }
+  h1 { margin: 0; font-size: clamp(26px, 6.4vw, 40px); font-weight: 400; color: var(--ink); letter-spacing: .04em; }
+  h1 em { font-style: normal; color: var(--d1); }
+  .sub { margin-top: 14px; color: var(--ink-soft); font-size: 15px; }
+  .back { display: inline-block; margin-top: 10px; color: var(--title); font-size: 14px; }
+  .legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 16px 0 6px; }
+  .legend button {
+    font: inherit; font-size: 14px; cursor: pointer; border: 2px solid var(--ink);
+    background: var(--paper); color: var(--ink); border-radius: 999px; padding: 3px 14px 3px 10px;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .legend button i { width: 14px; height: 14px; border-radius: 50%; display: inline-block; border: 2px solid var(--ink); }
+  .legend button[aria-pressed="false"] { opacity: .4; }
+  .legend button:focus-visible { outline: 3px solid var(--title); outline-offset: 2px; }
+  .card { background: var(--paper); border: 3px solid var(--ink); border-radius: 24px; box-shadow: 0 6px 0 var(--ink); overflow: hidden; }
+  .map-card svg { display: block; width: 100%; height: auto; }
+  .note { font-size: 12px; color: var(--ink-soft); text-align: center; margin: 8px 0 0; }
+  h2 { font-weight: 400; font-size: 24px; margin: 40px 0 12px; text-align: center; color: var(--ink); }
+  .days { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .day { padding: 0 0 12px; }
+  .day-top { padding: 12px 18px; color: #fff; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .day-top b { font-weight: 400; font-size: 22px; }
+  .day-top span { font-size: 14px; opacity: .95; }
+  .day ol { list-style: none; margin: 0; padding: 8px 18px 0; }
+  .day li { display: grid; grid-template-columns: 28px 3.2em 1fr; gap: 8px; align-items: start; padding: 6px 0; border-bottom: 2px dotted var(--land-edge); }
+  .day li:last-child { border-bottom: 0; }
+  .num { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--ink); color: #fff; font-size: 13px; display: grid; place-items: center; line-height: 1; }
+  .time { font-size: 13px; color: var(--ink-soft); padding-top: 3px; font-variant-numeric: tabular-nums; }
+  .what { font-size: 15px; }
+  .what small { display: block; font-size: 12px; color: var(--ink-soft); }
+  footer { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 32px; }
+  /* map text */
+  .lbl { font-family: var(--round); font-size: 15px; fill: var(--ink); paint-order: stroke; stroke: var(--paper); stroke-width: 5px; stroke-linejoin: round; }
+  .lbl.small { font-size: 12.5px; }
+  .pin-num { font-family: var(--round); font-size: 13px; fill: #fff; }
+  .place { font-family: var(--round); font-size: 12px; fill: var(--ink-soft); }
+  .route { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 2 9; }
+  .hide { display: none; }
+  @media (max-width: 480px) { .lbl { font-size: 17px; } .lbl.small { font-size: 15px; } }
+  @media (prefers-reduced-motion: no-preference) {
+    .bob { animation: bob 3s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    @keyframes bob { 50% { transform: translateY(-4px); } }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="ribbon"><h1>沖繩四天三夜 <em>地圖版</em></h1></div>
+    <div class="sub">2027.3.25（四）– 3.28（日）・6 人自駕・住那霸國際通旁</div>
+    <a class="back" href="./">← 回到完整行程表</a>
+    <div class="legend" id="legend"></div>
+  </header>
+
+  <div class="card map-card"><svg id="island" viewBox="0 0 800 1010" role="img" aria-label="沖繩本島四天行程地圖"></svg></div>
+  <p class="note">點上面的日期按鈕，可以只看某一天的路線・示意圖，距離不是實際比例</p>
+
+  <h2>那霸市區放大</h2>
+  <div class="card map-card"><svg id="naha" viewBox="0 0 800 560" role="img" aria-label="那霸市區景點放大圖"></svg></div>
+
+  <h2>每天去哪裡</h2>
+  <div class="days" id="days"></div>
+
+  <footer>完整營業時間、店家、地圖導航請看<a href="./">行程表</a></footer>
+</div>
+
+<script>
+  const DAYS = [
+    { n: 1, date: "3/25（四）", title: "南部・那霸", color: "var(--d1)", stops: [
+      { t: "10:50", name: "那霸機場・取車", ll: [127.648, 26.196], naha: true },
+      { t: "12:30", name: "瀨長島", note: "海景午餐、看飛機", ll: [127.642, 26.176], naha: true },
+      { t: "14:15", name: "齋場御嶽", note: "世界遺產", ll: [127.818, 26.180], lab: [16, -10] },
+      { t: "15:20", name: "知念岬公園", note: "看海步道", ll: [127.842, 26.150], lab: [16, 8] },
+      { t: "16:15", name: "入住飯店", note: "國際通旁", ll: [127.693, 26.216], naha: true },
+      { t: "17:00", name: "ゆうなんぎい", note: "沖繩家庭料理", ll: [127.683, 26.214], naha: true },
+      { t: "18:30", name: "國際通・牧志市場", ll: [127.689, 26.213], naha: true }
+    ]},
+    { n: 2, date: "3/26（五）", title: "北部・美ら海", color: "var(--d2)", stops: [
+      { t: "08:00", name: "從那霸出發", note: "高速約 2 小時", ll: [127.693, 26.216], naha: true, skipPin: true },
+      { t: "10:00", name: "美麗海水族館", ll: [127.872, 26.690], lab: [-18, 16, "end"] },
+      { t: "12:30", name: "岸本食堂", note: "百年沖繩麵", ll: [127.880, 26.655], lab: [-18, 6, "end"] },
+      { t: "13:45", name: "備瀨福木林道", ll: [127.895, 26.716], lab: [16, -22] },
+      { t: "15:00", name: "古宇利大橋・古宇利島", note: "愛心岩", ll: [128.012, 26.700], lab: [16, -16] },
+      { t: "17:15", name: "Seaside Drive-in", note: "晚餐", ll: [127.768, 26.436], lab: [-16, 6, "end"] },
+      { t: "18:30", name: "萬座毛看夕陽", ll: [127.848, 26.505], lab: [-16, -2, "end"] }
+    ]},
+    { n: 3, date: "3/27（六）", title: "中部・海中道路・港川", color: "var(--d3)", stops: [
+      { t: "09:00", name: "首里城", ll: [127.719, 26.217], naha: true },
+      { t: "11:00", name: "King Tacos 金武", note: "塔可飯發源店", ll: [127.927, 26.456], lab: [14, -8] },
+      { t: "12:15", name: "海中道路", ll: [127.935, 26.338], lab: [-10, 26, "end"] },
+      { t: "12:45", name: "宮城島・果報崖", ll: [127.988, 26.374], lab: [14, -4] },
+      { t: "14:15", name: "勝連城跡", note: "世界遺產", ll: [127.878, 26.330], lab: [-16, -8, "end"] },
+      { t: "15:45", name: "港川外人住宅", note: "小店街", ll: [127.722, 26.262], lab: [-16, -4, "end"] },
+      { t: "17:30", name: "うりずん", note: "琉球料理晚餐", ll: [127.698, 26.219], naha: true }
+    ]},
+    { n: 4, date: "3/28（日）", title: "那霸市區・返台", color: "var(--d4)", stops: [
+      { t: "08:30", name: "豬肉蛋飯糰", ll: [127.687, 26.2125], naha: true },
+      { t: "10:00", name: "壺屋陶器街", ll: [127.694, 26.211], naha: true },
+      { t: "11:30", name: "Jack's 牛排", ll: [127.673, 26.212], naha: true },
+      { t: "12:45", name: "波上宮", ll: [127.671, 26.222], naha: true },
+      { t: "13:45", name: "iias 沖繩豐崎", note: "採買＋晚餐", ll: [127.656, 26.162], naha: true },
+      { t: "17:55", name: "那霸機場", note: "提前 3 小時辦退稅", ll: [127.648, 26.196], naha: true }
+    ]}
+  ];
+
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs = {}, parent) => {
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  };
+  const text = (parent, x, y, str, cls, anchor = "start") => {
+    const t = el("text", { x, y, class: cls, "text-anchor": anchor }, parent);
+    t.textContent = str;
+    return t;
+  };
+
+  // ---------- 全島地圖 ----------
+  const W = 800, H = 1010, LON0 = 127.52, LAT0 = 26.97, K = 1060;
+  const P = ([lon, lat]) => [(lon - LON0) * K * 0.9, (LAT0 - lat) * K];
+
+  const COAST = [
+    [127.660,26.078],[127.705,26.092],[127.760,26.118],[127.805,26.136],[127.842,26.160],[127.835,26.200],
+    [127.805,26.228],[127.800,26.275],[127.835,26.302],[127.872,26.318],[127.930,26.330],[127.965,26.352],
+    [127.972,26.392],[127.948,26.415],[127.965,26.448],[128.005,26.478],[128.050,26.525],[128.100,26.570],
+    [128.170,26.625],[128.255,26.700],[128.318,26.790],[128.300,26.862],[128.255,26.872],[128.200,26.835],
+    [128.130,26.765],[128.050,26.722],[128.000,26.690],[127.960,26.655],[127.925,26.648],[127.912,26.692],
+    [127.882,26.716],[127.852,26.695],[127.858,26.645],[127.882,26.612],[127.930,26.592],[127.882,26.545],
+    [127.842,26.512],[127.775,26.450],[127.716,26.440],[127.738,26.382],[127.752,26.330],[127.732,26.282],
+    [127.702,26.245],[127.668,26.222],[127.648,26.205],[127.638,26.180],[127.650,26.130],[127.660,26.078]
+  ];
+  const ISLANDS = [
+    { c: [128.018, 26.708], r: 9 }, { c: [127.810, 26.716], r: 16, name: "伊江島" }, { c: [127.990, 26.378], r: 7 }
+  ];
+
+  function smoothPath(pts) {
+    const p = pts.map(P);
+    let d = `M${p[0][0]},${p[0][1]}`;
+    for (let i = 1; i < p.length; i++) {
+      const [x0, y0] = p[i - 1], [x1, y1] = p[i];
+      d += ` Q${x0},${y0} ${(x0 + x1) / 2},${(y0 + y1) / 2}`;
+    }
+    return d + " Z";
+  }
+
+  function drawIsland() {
+    const svg = document.getElementById("island");
+    const defs = el("defs", {}, svg);
+    const pat = el("pattern", { id: "waves", width: 60, height: 24, patternUnits: "userSpaceOnUse" }, defs);
+    el("path", { d: "M0 12 Q15 4 30 12 T60 12", fill: "none", stroke: "var(--sea-line)", "stroke-width": 2, opacity: .55 }, pat);
+    el("rect", { width: W, height: H, fill: "var(--sea)" }, svg);
+    el("rect", { width: W, height: H, fill: "url(#waves)" }, svg);
+
+    // 島
+    el("path", { d: smoothPath(COAST), fill: "var(--land)", stroke: "var(--ink)", "stroke-width": 3, "stroke-linejoin": "round" }, svg);
+    ISLANDS.forEach(i => {
+      const [x, y] = P(i.c);
+      el("circle", { cx: x, cy: y, r: i.r, fill: "var(--land)", stroke: "var(--ink)", "stroke-width": 2.5 }, svg);
+      if (i.name) text(svg, x, y - i.r - 8, i.name, "place", "middle");
+    });
+    // 古宇利大橋
+    const [bx1, by1] = P([127.990, 26.690]), [bx2, by2] = P([128.012, 26.703]);
+    el("path", { d: `M${bx1},${by1} Q${(bx1 + bx2) / 2},${(by1 + by2) / 2 - 12} ${bx2},${by2}`, fill: "none", stroke: "var(--ink)", "stroke-width": 3 }, svg);
+    // 海中道路
+    const [hx1, hy1] = P([127.905, 26.322]), [hx2, hy2] = P([127.960, 26.355]);
+    el("line", { x1: hx1, y1: hy1, x2: hx2, y2: hy2, stroke: "var(--ink)", "stroke-width": 3, "stroke-linecap": "round" }, svg);
+
+    drawDecor(svg);
+
+    // 路線
+    const routes = el("g", {}, svg);
+    const pins = el("g", {}, svg);
+    DAYS.forEach(day => {
+      const g = el("g", { "data-day": day.n }, routes);
+      const pts = [];
+      const naha = P([127.690, 26.214]);
+      day.stops.forEach(s => pts.push(s.naha ? naha : P(s.ll)));
+      if (day.n !== 4) pts.push(naha);
+      let d = `M${pts[0][0]},${pts[0][1]}`;
+      for (let i = 1; i < pts.length; i++) {
+        const [x0, y0] = pts[i - 1], [x1, y1] = pts[i];
+        if (x0 === x1 && y0 === y1) continue;
+        const mx = (x0 + x1) / 2 + (y1 - y0) * 0.12 * (day.n % 2 ? 1 : -1);
+        const my = (y0 + y1) / 2 - (x1 - x0) * 0.12 * (day.n % 2 ? 1 : -1);
+        d += ` Q${mx},${my} ${x1},${y1}`;
+      }
+      el("path", { d, class: "route", stroke: day.color }, g);
+
+      const pg = el("g", { "data-day": day.n }, pins);
+      day.stops.forEach((s, i) => {
+        if (s.naha) return;
+        const [x, y] = P(s.ll);
+        drawPin(pg, x, y, i + 1, day.color);
+        const [dx, dy, anchor] = s.lab || [14, 4];
+        text(pg, x + dx, y + dy, s.name, "lbl", anchor || "start");
+        if (s.note) text(pg, x + dx, y + dy + 17, s.note, "lbl small", anchor || "start");
+      });
+    });
+
+    // 那霸
+    const [nx, ny] = P([127.690, 26.214]);
+    el("circle", { cx: nx, cy: ny, r: 20, fill: "var(--paper)", stroke: "var(--ink)", "stroke-width": 3 }, svg);
+    drawHouse(svg, nx, ny);
+    text(svg, nx - 28, ny + 6, "那霸", "lbl", "end");
+    text(svg, nx - 28, ny + 24, "（看下面放大圖）", "lbl small", "end");
+    // 機場飛機
+    drawPlane(svg, ...P([127.585, 26.120]));
+
+    text(svg, 36, 70, "沖繩本島", "lbl");
+    drawCompass(svg, 64, 140);
+  }
+
+  function drawPin(g, x, y, num, color) {
+    el("path", { d: `M${x},${y} c-4,-8 -13,-12 -13,-22 a13,13 0 1 1 26,0 c0,10 -9,14 -13,22z`, fill: color, stroke: "var(--ink)", "stroke-width": 2.5, "stroke-linejoin": "round" }, g);
+    text(g, x, y - 18, String(num), "pin-num", "middle");
+  }
+  function drawHouse(g, x, y) {
+    el("path", { d: `M${x - 9},${y + 7} v-9 l9,-8 l9,8 v9 z`, fill: "var(--d1)", stroke: "var(--ink)", "stroke-width": 2, "stroke-linejoin": "round" }, g);
+    el("rect", { x: x - 3, y: y + 1, width: 6, height: 6, fill: "var(--paper)", stroke: "var(--ink)", "stroke-width": 1.5 }, g);
+  }
+  function drawPlane(g, x, y) {
+    const p = el("g", { class: "bob" }, el("g", { transform: `translate(${x} ${y}) rotate(-30)` }, g));
+    el("path", { d: "M-18,0 L16,0 Q22,0 22,-3 Q22,-6 16,-6 L-14,-6 Z M-2,-4 L-10,-18 L-4,-18 L8,-4 Z M-2,-2 L-10,12 L-4,12 L8,-2 Z M-16,-4 L-22,-12 L-18,-12 L-10,-4 Z", fill: "var(--paper)", stroke: "var(--ink)", "stroke-width": 2, "stroke-linejoin": "round" }, p);
+  }
+  function drawCompass(g, x, y) {
+    el("circle", { cx: x, cy: y, r: 24, fill: "var(--paper)", stroke: "var(--ink)", "stroke-width": 2.5 }, g);
+    el("path", { d: `M${x},${y - 16} L${x + 6},${y + 4} L${x},${y} L${x - 6},${y + 4} Z`, fill: "var(--d1)", stroke: "var(--ink)", "stroke-width": 1.5 }, g);
+    text(g, x, y + 18, "N", "pin-num", "middle").setAttribute("fill", "var(--ink)");
+  }
+  function drawStar(g, x, y, r, color) {
+    let d = "";
+    for (let i = 0; i < 10; i++) {
+      const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * .45 : r;
+      d += (i ? "L" : "M") + (x + rr * Math.cos(a)).toFixed(1) + "," + (y + rr * Math.sin(a)).toFixed(1);
+    }
+    el("path", { d: d + "Z", fill: color, stroke: color, "stroke-width": 4, "stroke-linejoin": "round" }, g);
+  }
+  function drawHibiscus(g, x, y, s = 1) {
+    const f = el("g", { transform: `translate(${x} ${y}) scale(${s})` }, g);
+    for (let i = 0; i < 5; i++) el("ellipse", { cx: 0, cy: -12, rx: 9, ry: 13, fill: "#e8577a", stroke: "var(--ink)", "stroke-width": 1.8, transform: `rotate(${i * 72})` }, f);
+    el("circle", { r: 4, fill: "#f7d25c", stroke: "var(--ink)", "stroke-width": 1.5 }, f);
+  }
+  function drawFish(g, x, y, color, flip = false) {
+    const f = el("g", { class: "bob" }, el("g", { transform: `translate(${x} ${y}) scale(${flip ? -1 : 1} 1)` }, g));
+    el("path", { d: "M-14,0 Q-4,-10 10,0 Q-4,10 -14,0 Z M10,0 L20,-8 L18,0 L20,8 Z", fill: color, stroke: "var(--ink)", "stroke-width": 2, "stroke-linejoin": "round" }, f);
+    el("circle", { cx: -7, cy: -1.5, r: 1.8, fill: "var(--ink)" }, f);
+  }
+  function drawWhaleShark(g, x, y) {
+    const w = el("g", { class: "bob" }, el("g", { transform: `translate(${x} ${y})` }, g));
+    el("path", { d: "M-46,0 Q-40,-18 0,-18 Q34,-16 44,-4 L62,-20 L58,0 L62,20 L44,4 Q30,16 0,16 Q-40,16 -46,0 Z", fill: "#5d8fa8", stroke: "var(--ink)", "stroke-width": 2.5, "stroke-linejoin": "round" }, w);
+    el("path", { d: "M-6,-17 L4,-32 L12,-17 Z", fill: "#5d8fa8", stroke: "var(--ink)", "stroke-width": 2.5, "stroke-linejoin": "round" }, w);
+    [[-24,-6],[-12,-10],[0,-6],[12,-10],[24,-6],[-16,4],[-2,6],[14,4],[28,2]].forEach(([a, b]) => el("circle", { cx: a, cy: b, r: 2.4, fill: "#fff" }, w));
+    el("circle", { cx: -36, cy: -4, r: 2.2, fill: "var(--ink)" }, w);
+    el("path", { d: "M-44,4 Q-38,8 -32,5", fill: "none", stroke: "var(--ink)", "stroke-width": 2, "stroke-linecap": "round" }, w);
+  }
+  function drawSun(g, x, y) {
+    const s = el("g", {}, g);
+    for (let i = 0; i < 10; i++) {
+      const a = i * Math.PI / 5;
+      el("line", { x1: x + Math.cos(a) * 30, y1: y + Math.sin(a) * 30, x2: x + Math.cos(a) * 40, y2: y + Math.sin(a) * 40, stroke: "#f2b441", "stroke-width": 4, "stroke-linecap": "round" }, s);
+    }
+    el("circle", { cx: x, cy: y, r: 22, fill: "#f7c85a", stroke: "var(--ink)", "stroke-width": 2.5 }, s);
+  }
+  function drawBoat(g, x, y) {
+    const b = el("g", { class: "bob" }, el("g", { transform: `translate(${x} ${y})` }, g));
+    el("path", { d: "M-24,0 L24,0 L16,12 L-16,12 Z", fill: "var(--paper)", stroke: "var(--ink)", "stroke-width": 2.5, "stroke-linejoin": "round" }, b);
+    el("path", { d: "M0,0 L0,-30 L18,-6 Z", fill: "#ef8e6c", stroke: "var(--ink)", "stroke-width": 2.5, "stroke-linejoin": "round" }, b);
+  }
+  function drawDecor(svg) {
+    const g = el("g", {}, svg);
+    drawWhaleShark(g, ...P([127.700, 26.650]));
+    text(g, ...P([127.640, 26.608]), "美麗海的鯨鯊！", "lbl small");
+    drawSun(g, ...P([127.660, 26.520]));
+    text(g, ...P([127.622, 26.468]), "夕陽約 18:45", "lbl small");
+    drawFish(g, ...P([128.150, 26.420]), "#f7c85a");
+    drawFish(g, ...P([128.210, 26.460]), "#ef8e6c", true);
+    drawFish(g, ...P([127.620, 26.330]), "#9a86c8");
+    drawBoat(g, ...P([128.150, 26.260]));
+    drawStar(g, ...P([128.230, 26.160]), 16, "#ef8e6c");
+    drawStar(g, ...P([127.620, 26.090]), 12, "#f7c85a");
+    drawHibiscus(g, ...P([128.250, 26.330]), 1.1);
+    drawHibiscus(g, ...P([128.000, 26.850]), .9);
+  }
+
+  // ---------- 那霸放大圖（手繪示意，位置為了好讀有調整） ----------
+  function drawNaha() {
+    const svg = document.getElementById("naha");
+    const defs = el("defs", {}, svg);
+    const pat = el("pattern", { id: "waves2", width: 60, height: 24, patternUnits: "userSpaceOnUse" }, defs);
+    el("path", { d: "M0 12 Q15 4 30 12 T60 12", fill: "none", stroke: "var(--sea-line)", "stroke-width": 2, opacity: .55 }, pat);
+    el("rect", { width: 800, height: 560, fill: "var(--sea)" }, svg);
+    el("rect", { width: 800, height: 560, fill: "url(#waves2)" }, svg);
+    el("path", { d: "M300,0 C280,60 230,110 190,140 C160,165 150,210 175,250 C195,285 210,300 170,318 C135,332 105,360 100,400 C96,440 130,470 175,486 C205,498 215,530 212,560 L800,560 L800,0 Z",
+      fill: "var(--land)", stroke: "var(--ink)", "stroke-width": 3, "stroke-linejoin": "round" }, svg);
+    // 瀨長島 + 橋
+    el("line", { x1: 72, y1: 492, x2: 150, y2: 482, stroke: "var(--ink)", "stroke-width": 4, "stroke-linecap": "round" }, svg);
+    el("ellipse", { cx: 62, cy: 496, rx: 30, ry: 20, fill: "var(--land)", stroke: "var(--ink)", "stroke-width": 3 }, svg);
+    // 國際通
+    el("path", { d: "M330,236 Q450,196 575,214", fill: "none", stroke: "#e8b870", "stroke-width": 14, "stroke-linecap": "round", opacity: .75 }, svg);
+    text(svg, 452, 192, "國際通", "lbl small", "middle");
+    // 單軌電車
+    el("path", { d: "M160,392 C230,370 280,330 350,290 S520,190 700,150", fill: "none", stroke: "var(--ink-soft)", "stroke-width": 2.5, "stroke-dasharray": "9 6" }, svg);
+    text(svg, 612, 150, "單軌電車", "place", "middle");
+
+    // key → 示意座標與標籤位置
+    const POS = {
+      "127.648,26.196": { x: 150, y: 400, name: "那霸機場", lab: [0, 26, "middle"] },
+      "127.642,26.176": { x: 62, y: 490, name: "瀨長島", lab: [0, 44, "middle"] },
+      "127.656,26.162": { x: 290, y: 500, name: "iias 沖繩豐崎", lab: [22, 4] },
+      "127.671,26.222": { x: 210, y: 170, name: "波上宮", lab: [-20, -6, "end"] },
+      "127.673,26.212": { x: 250, y: 290, name: "Jack's 牛排", lab: [0, 26, "middle"] },
+      "127.683,26.214": { x: 350, y: 236, name: "ゆうなんぎい", lab: [0, 28, "middle"] },
+      "127.689,26.213": { x: 440, y: 262, name: "國際通・牧志市場", lab: [0, 28, "middle"] },
+      "127.687,26.2125": { x: 400, y: 330, name: "豬肉蛋飯糰", lab: [0, 26, "middle"] },
+      "127.694,26.211": { x: 530, y: 330, name: "壺屋陶器街", lab: [0, 26, "middle"] },
+      "127.693,26.216": { x: 540, y: 212, name: "飯店 ブラッサム", lab: [0, 28, "middle"] },
+      "127.698,26.219": { x: 610, y: 262, name: "うりずん", lab: [0, 26, "middle"] },
+      "127.719,26.217": { x: 700, y: 148, name: "首里城", lab: [0, 26, "middle"] }
+    };
+    const groups = {};
+    DAYS.forEach(day => day.stops.forEach((s, i) => {
+      if (!s.naha || s.skipPin) return;
+      const key = s.ll.join();
+      (groups[key] = groups[key] || []).push({ day, i });
+    }));
+    const layer = el("g", {}, svg);
+    Object.entries(groups).forEach(([key, list]) => {
+      const p = POS[key]; if (!p) return;
+      const off = (list.length - 1) * 11;
+      list.forEach((s, j) => drawPin(el("g", { "data-day": s.day.n }, layer), p.x - off + j * 22, p.y, s.i + 1, s.day.color));
+      const [dx, dy, anchor] = p.lab;
+      text(layer, p.x + dx, p.y + dy, p.name, "lbl small", anchor || "start");
+    });
+    drawPlane(svg, 70, 380);
+    drawHibiscus(svg, 750, 500, .9);
+    drawStar(svg, 40, 60, 14, "#ef8e6c");
+    drawFish(svg, 90, 250, "#f7c85a");
+    text(svg, 760, 40, "那霸市區（示意圖）", "lbl", "end");
+  }
+
+  // ---------- 每日卡片 ----------
+  function drawDays() {
+    document.getElementById("days").innerHTML = DAYS.map(d => `
+      <section class="card day">
+        <div class="day-top" style="background:${d.color}"><b>DAY ${d.n}</b><span>${d.date}・${d.title}</span></div>
+        <ol>${d.stops.map((s, i) => `
+          <li><span class="num" style="background:${d.color}">${i + 1}</span><span class="time">${s.t}</span>
+          <span class="what">${s.name}${s.note ? `<small>${s.note}</small>` : ""}</span></li>`).join("")}
+        </ol>
+      </section>`).join("");
+  }
+
+  // ---------- 篩選 ----------
+  function drawLegend() {
+    const lg = document.getElementById("legend");
+    const all = document.createElement("button");
+    all.textContent = "全部"; all.setAttribute("aria-pressed", "true"); lg.appendChild(all);
+    const btns = DAYS.map(d => {
+      const b = document.createElement("button");
+      b.innerHTML = `<i style="background:${d.color}"></i>DAY ${d.n}`;
+      b.setAttribute("aria-pressed", "true"); b.dataset.day = d.n; lg.appendChild(b); return b;
+    });
+    const apply = sel => {
+      btns.forEach(b => b.setAttribute("aria-pressed", String(sel === 0 || +b.dataset.day === sel)));
+      all.setAttribute("aria-pressed", String(sel === 0));
+      document.querySelectorAll("svg [data-day]").forEach(g => g.classList.toggle("hide", sel !== 0 && +g.dataset.day !== sel));
+    };
+    all.onclick = () => apply(0);
+    btns.forEach(b => b.onclick = () => apply(+b.dataset.day));
+  }
+
+  drawIsland(); drawNaha(); drawDays(); drawLegend();
+</script>
+</body>
+</html>

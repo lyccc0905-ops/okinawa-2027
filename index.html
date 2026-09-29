@@ -104,6 +104,10 @@
     color: var(--ink);
   }
   .pill b { font-family: var(--mono); font-weight: 600; color: var(--sea); }
+  .pill-link { text-decoration: none; background: var(--sea); color: var(--paper); }
+  .pill-link b { color: var(--paper); font-family: inherit; }
+  .pill-link:hover { filter: brightness(1.1); }
+  .pill-link:focus-visible { outline: 2px solid var(--sea); outline-offset: 2px; }
 
   /* ---------- day nav ---------- */
   nav.days {
@@ -391,6 +395,7 @@
       <span class="pill" id="countdown">出發倒數 <b>—</b> 天</span>
       <span class="pill">時差 <b>+1h</b>（沖繩比台灣快）</span>
       <span class="pill">同行 <b>6</b> 人</span>
+      <a class="pill pill-link" href="https://lyccc0905-ops.github.io/okinawa-2027/map.html" target="_blank" rel="noopener">看<b>地圖版</b> ↗</a>
       <span class="pill">交通 <b>租車</b>・住國際通旁</span>
     </div>
     <svg class="shore" viewBox="0 0 720 72" aria-hidden="true">
