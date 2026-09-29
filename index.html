@@ -218,7 +218,7 @@
     .bag .name, .bag .dim, .bag .rule { grid-column: 2; }
   }
 
-  .infos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+  .infos { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; }
   .info {
     background: var(--paper); border-radius: 18px; box-shadow: var(--shadow);
     padding: 12px 16px; display: flex; flex-direction: column; gap: 2px; min-width: 0;
@@ -356,7 +356,7 @@
       <span class="pill" id="countdown">出發倒數 <b>—</b> 天</span>
       <span class="pill">時差 <b>+1h</b>（沖繩比台灣快）</span>
       <span class="pill">同行 <b>6</b> 人</span>
-      <span class="pill">交通 <b>租車</b>・住那霸</span>
+      <span class="pill">交通 <b>租車</b>・住國際通旁</span>
     </div>
     <svg class="shore" viewBox="0 0 720 72" aria-hidden="true">
       <path class="w1" d="M0 11 Q 30.0 -3 60.0 11 Q 90.0 25 120.0 11 Q 150.0 -3 180.0 11 Q 210.0 25 240.0 11 Q 270.0 -3 300.0 11 Q 330.0 25 360.0 11 Q 390.0 -3 420.0 11 Q 450.0 25 480.0 11 Q 510.0 -3 540.0 11 Q 570.0 25 600.0 11 Q 630.0 -3 660.0 11 Q 690.0 25 720.0 11"/>
@@ -382,6 +382,11 @@
       <span class="k">入境手續</span>
       <b>Visit Japan Web ↗</b>
       <small>入境審查與海關 QR code</small>
+    </a>
+    <a class="info" href="https://www.google.com/maps/search/?api=1&query=JR%E4%B9%9D%E5%B7%9E%E3%83%9B%E3%83%86%E3%83%AB%20%E3%83%96%E3%83%A9%E3%83%83%E3%82%B5%E3%83%A0%E9%82%A3%E8%A6%87" target="_blank" rel="noopener">
+      <span class="k">住宿・3 晚</span>
+      <b>JR九州ホテル ブラッサム那覇 ↗</b>
+      <small>入住 15:00・退房 11:00・停車 ¥1,500／晚</small>
     </a>
     <div class="info">
       <span class="k">日幣匯率</span>
@@ -575,22 +580,22 @@
         { t: "12:30", title: "瀨長島 Umikaji Terrace", note: "機場旁的白色小島，海景餐廳、甜點一排，吃午餐順便看飛機起降（車程約 15 分）", hours: "餐廳 11:00–21:00・無公休（天候不佳可能停業）", type: "food", map: "瀬長島ウミカジテラス", shops: SHOPS.umikaji, cafes: CAFES.umikaji },
         { t: "14:15", title: "齋場御嶽", note: "世界遺產、琉球最神聖的祭祀場所，走一圈約 1 小時；石板路有坡，穿好走的鞋。先到「綠之館 Sefa」買票（車程約 40 分）", hours: "9:00–18:00・17:15 停止售票・農曆 5/1–3、10/1–3 休息", map: "斎場御嶽" },
         { t: "15:20", title: "知念岬公園", note: "就在齋場御嶽旁，海岬步道看久高島與太平洋", hours: "戶外公園", map: "知念岬公園", cafes: CAFES.nanjo },
-        { t: "16:15", title: "回那霸，飯店入住", note: "車程約 40–50 分，先放行李、停好車", map: "那覇市" },
-        { t: "17:00", title: "晚餐：ゆうなんぎい", note: "國際通旁的老字號沖繩家庭料理，苦瓜炒什錦、滷豬腳、紅芋天婦羅。能不能訂位各家說法不一，先打電話 098-867-3765；訂不到就開門時到", hours: "17:00–21:30・週日與國定假日公休", type: "food", map: "ゆうなんぎい 那覇" },
-        { t: "18:30", title: "逛國際通・第一牧志公設市場", note: "步行即到。3/28 週日市場公休，想看市場就今晚來；伴手禮、紅芋塔、Blue Seal 冰淇淋", hours: "市場 8:00–22:00・每月第 4 個週日公休", map: "第一牧志公設市場", shops: SHOPS.kokusaiNight, cafes: CAFES.kokusaiNight }
+        { t: "16:15", title: "入住 JR九州ホテル ブラッサム那覇", note: "國際通旁，走路 1 分就到國際通。車停飯店的機械式停車場：¥1,500／晚、限高 2.1m、重 2 噸，23:00–6:00 不能進出車（車程約 40–50 分）", hours: "入住 15:00・退房 11:00", type: "alert", map: "JR九州ホテル ブラッサム那覇" },
+        { t: "17:00", title: "晚餐：ゆうなんぎい", note: "國際通旁的老字號沖繩家庭料理，苦瓜炒什錦、滷豬腳、紅芋天婦羅。能不能訂位各家說法不一，先打電話 098-867-3765；訂不到就開門時到。從飯店走路約 15 分", hours: "17:00–21:30・週日與國定假日公休", type: "food", map: "ゆうなんぎい 那覇" },
+        { t: "18:30", title: "逛國際通・第一牧志公設市場", note: "步行即到。3/28 週日市場公休，想看市場就今晚來；伴手禮、紅芋塔、Blue Seal 冰淇淋。飯店就在國際通上，長輩累了可以先回去休息", hours: "市場 8:00–22:00・每月第 4 個週日公休", map: "第一牧志公設市場", shops: SHOPS.kokusaiNight, cafes: CAFES.kokusaiNight }
       ]
     },
     {
       date: "2027-03-26", title: "北部・美ら海",
       events: [
-        { t: "08:00", title: "從那霸出發", note: "走沖繩自動車道到許田 IC，全程約 2 小時；早餐可以先買麵包帶上車，或在便利商店解決", type: "alert", cafes: CAFES.earlyBread },
+        { t: "08:00", title: "從那霸出發", note: "走沖繩自動車道到許田 IC，全程約 2 小時。早餐可以先買麵包帶上車，或吃飯店自助早餐（6:30 開始、另外付費，1F Barbaresco 37）", type: "alert", cafes: CAFES.earlyBread },
         { t: "10:00", title: "沖繩美麗海水族館", note: "黑潮之海的鯨鯊必看；海洋博公園的海豚表演免費，約 10:30、11:30、13:00、15:00 各一場", hours: "8:30–18:30・17:30 最後入館・無公休", map: "沖縄美ら海水族館", shops: SHOPS.motobu, cafes: CAFES.aquarium },
         { t: "12:30", title: "午餐：岸本食堂", note: "創業百年的沖繩麵老店，柴火湯頭＋手打麵，搭配炊飯；中午常排隊（車程約 15 分）", hours: "11:00–17:00（賣完提早收）・週三公休", type: "food", map: "きしもと食堂 本部町", cafes: CAFES.kishimoto },
         { t: "13:45", title: "備瀨福木林道", note: "水族館旁的老聚落，福木樹隧道通到海邊，平路好走", hours: "戶外聚落", map: "備瀬のフクギ並木", cafes: CAFES.bise },
         { t: "15:00", title: "古宇利大橋・古宇利島", note: "開上跨海大橋，心形岩（Tinu 海灘）拍照（車程約 30 分）", hours: "戶外", map: "古宇利大橋", shops: SHOPS.kouri, cafes: CAFES.kouri },
         { t: "17:15", title: "晚餐：Seaside Drive-in", note: "恩納村 1967 年開業的美式餐廳，招牌濃湯與塔可飯；6 人先打 098-964-2272 問訂位（車程約 50 分）", hours: "9:00–21:00・週三公休", type: "food", map: "シーサイドドライブイン 恩納村" },
         { t: "18:30", title: "萬座毛看夕陽", note: "象鼻岩海崖，車程約 10 分；日落約 18:45，步道平緩，門票 ¥100", hours: "8:00–20:00・無公休", map: "万座毛" },
-        { t: "19:10", title: "回那霸", note: "走高速約 1 小時" }
+        { t: "19:10", title: "回那霸", note: "走高速約 1 小時；飯店停車場 23:00 後不能進出車" }
       ]
     },
     {
@@ -605,16 +610,16 @@
         { t: "17:00", title: "北谷美國村", note: "摩天輪、美式街區，Blue Seal 冰淇淋北谷店在這裡；店家多開到 21:00，看完夕陽還能再逛（車程約 15 分）", hours: "Blue Seal 11:00–22:00", map: "美浜アメリカンビレッジ", shops: SHOPS.chatan, cafes: CAFES.chatan },
         { t: "17:30", title: "晚餐：美國村海景餐廳", note: "牛排、漢堡、海鮮都有，可以現場挑", type: "food", map: "美浜アメリカンビレッジ" },
         { t: "18:30", title: "日落海灘看夕陽", note: "吃完走過去就到，日落約 18:45", map: "サンセットビーチ 北谷" },
-        { t: "19:15", title: "回那霸", note: "車程約 40 分" }
+        { t: "19:15", title: "回那霸", note: "車程約 40 分；飯店停車場 23:00 後不能進出車" }
       ]
     },
     {
       date: "2027-03-28", title: "那霸市區・返台",
       events: [
-        { t: "08:30", title: "早餐：豬肉蛋飯糰本店", note: "Pork Tamago Onigiri 牧志市場店，在市場建築外，週日照常營業", hours: "7:00–20:00・無公休", type: "food", map: "ポークたまごおにぎり本店" },
+        { t: "08:30", title: "早餐：豬肉蛋飯糰本店", note: "Pork Tamago Onigiri 牧志市場店，從飯店走路約 5 分；在市場建築外，週日照常營業", hours: "7:00–20:00・無公休", type: "food", map: "ポークたまごおにぎり本店" },
         { t: "09:15", title: "國際通散步", note: "早上人少，慢慢逛到壺屋", shops: SHOPS.kokusaiMorning, cafes: CAFES.kokusaiMorning },
         { t: "10:00", title: "壺屋陶器街", note: "沖繩燒陶器小店，挑碗盤、風獅爺；各店公休日不同", hours: "多數店家約 10:00–18:00", map: "壺屋やちむん通り", shops: SHOPS.tsuboya },
-        { t: "11:00", title: "退房、行李放車上", type: "alert" },
+        { t: "11:00", title: "退房、把車開出停車場", note: "退房和停車都到 11:00；行李放車上，後面直接開車走", type: "alert", map: "JR九州ホテル ブラッサム那覇" },
         { t: "11:30", title: "午餐：Jack's Steak House", note: "1953 年開業的老牛排館，不能訂位，中午開門就去比晚上好排", hours: "11:00–22:30・週三公休", type: "food", map: "ジャッキーステーキハウス" },
         { t: "13:00", title: "波上宮", note: "蓋在海崖上的神社，離 Jack's 車程約 5 分，旁邊就是波之上海灘", hours: "境內全天・授與所 9:00–16:45", map: "波上宮", cafes: CAFES.naminoue },
         { t: "14:30", title: "iias 沖繩豐崎", note: "離機場約 15 分的大型購物中心，最後採買伴手禮（車程約 20 分）", hours: "商店 10:00–21:00・餐廳 11:00–23:00", map: "iias沖縄豊崎", shops: SHOPS.iias, cafes: CAFES.iias },
@@ -628,10 +633,10 @@
   ];
 
   const todos = [
-    { id: "hotel", text: "訂住宿：那霸市區 3 晚、6 人", why: "三間雙人房或一間公寓式整層；確認有停車場，以及停車費" },
+    { id: "parking", text: "打電話給飯店，確認機械式停車場能不能先預約", why: "JR九州ホテル ブラッサム那覇，限高 2.1m、寬 1.9m、長 5.3m、重 2 噸" },
     { id: "booking", text: "餐廳訂位：ゆうなんぎい 3/25 17:00（098-867-3765）、Seaside Drive-in 3/26 17:15（098-964-2272）", why: "6 人一桌很難現場排，能訂位的先訂" },
     { id: "shuri", text: "2 月底預約首里城正殿：3/27 09:00 時段、6 人", why: "官網線上預約，一個月前開放" },
-    { id: "car", text: "預約租車：6 人＋行李要 8 人座以上大車，或租兩台", why: "3/25 機場取車、3/28 機場還車；每位駕駛都要帶台灣駕照正本＋日文譯本（監理站可辦）" },
+    { id: "car", text: "預約租車：8 人座 Noah／Voxy／Serena 這類車", why: "要停得進飯店停車場（高 2.1m、重 2 噸以下），Alphard、Hiace 停不進去；3/25 機場取車、3/28 機場還車；每位駕駛都要帶台灣駕照正本＋日文譯本" },
     { id: "tickets", text: "預買美麗海水族館門票", why: "網路或便利商店買，現場少排一次隊" },
     { id: "esim", text: "網路：eSIM / 網卡" },
     { id: "jpy", text: "換日幣" },
