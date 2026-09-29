@@ -8,6 +8,20 @@
 # 坑 Registry
 
 ---
+name: japan-taxfree-refund-2026
+type: constraint
+status: active
+confidence: probable
+tags: [退稅, 那霸機場, 行程]
+discovered: 2026-09-29
+---
+
+**症狀**：以前的經驗是「在店裡直接免稅」，但 2027 年 3 月去已經不是這樣。
+**根因**：日本免稅在 2026-11-01 改成退稅制。店裡先付含稅價，出境時要在「託運行李之前」到機台（或用 Visit Japan Web）辦確認，才會退稅。消耗品在日本用掉，整張收據都不能退。
+**繞法**：Day 4 到機場的提醒已加上「託運前先辦退稅確認」。實際退款方式和那霸機台的位置，出發前再查觀光廳頁面。
+**佐證**：觀光廳旅客專頁（2026-09-29 查詢）；制度才剛上路，所以標 probable。
+
+---
 name: makishi-market-4th-sunday
 type: constraint
 status: active

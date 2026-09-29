@@ -195,6 +195,20 @@
   .stub .fn { font-family: var(--mono); font-weight: 600; font-size: 20px; color: var(--sea); }
   .stub .dt { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
 
+  /* ---------- entry rules ---------- */
+  .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; margin-top: 10px; }
+  .rule-group { background: var(--paper); border-radius: 18px; box-shadow: var(--shadow); padding: 14px 16px; min-width: 0; }
+  .rule-group h3 { margin: 0 0 6px; font-size: 13px; font-weight: 700; color: var(--sea); letter-spacing: .04em; }
+  .rule-group ul { list-style: none; margin: 0; padding: 0; }
+  .rule-group li { padding: 7px 0 7px 14px; position: relative; font-size: 13px; line-height: 1.6; }
+  .rule-group li + li { border-top: 1px solid var(--line); }
+  .rule-group li::before { content: ""; position: absolute; left: 0; top: 14px; width: 6px; height: 6px; border-radius: 50%; background: var(--sea); }
+  .rule-group li.warn::before { background: var(--coral); }
+  .rule-group li b { font-weight: 700; }
+  .rule-group li.warn b { color: var(--coral-ink); }
+  .rule-group li a { color: var(--sea); }
+  @media (max-width: 400px) { .rules { grid-template-columns: 1fr; } }
+
   /* ---------- hotel ---------- */
   .hotel {
     background: var(--paper); border-radius: 18px; box-shadow: var(--shadow);
@@ -389,7 +403,7 @@
 
   <nav class="days" aria-label="日程" id="dayNav"></nav>
 
-  <h2>入境提醒事項</h2>
+  <h2>入境提醒事項 <span class="sub">2026/9 查核，出發前一週再確認</span></h2>
   <div class="infos">
     <a class="info" href="https://www.vjw.digital.go.jp/" target="_blank" rel="noopener">
       <span class="k">入境手續</span>
@@ -402,6 +416,7 @@
       <small id="jpyMeta">每天早上 8 點更新</small>
     </div>
   </div>
+  <div class="rules" id="rules"></div>
 
   <h2>航班 <span class="sub">時間皆為當地時間</span></h2>
   <div class="passes" id="passes"></div>
@@ -656,7 +671,7 @@
         { t: "14:30", title: "iias 沖繩豐崎", note: "離機場約 15 分的大型購物中心，最後採買伴手禮（車程約 20 分）", hours: "商店 10:00–21:00・餐廳 11:00–23:00", map: "iias沖縄豊崎", shops: SHOPS.iias, cafes: CAFES.iias },
         { t: "17:00", title: "晚餐：iias 沖繩豐崎", note: "在商場內吃完就近還車，不用再趕路", type: "food", map: "iias沖縄豊崎" },
         { t: "18:00", title: "加滿油、還車", note: "租車公司會檢查油量，再搭接駁車到機場", type: "alert" },
-        { t: "18:55", title: "抵達那霸機場 國際線", note: "建議起飛前 2 小時到", type: "alert" },
+        { t: "18:55", title: "抵達那霸機場 國際線", note: "建議起飛前 2 小時到。有退稅商品的人，託運行李前先到免稅機台辦確認", type: "alert" },
         { t: "20:55", title: "CI123 起飛 → 桃園", note: "經濟艙 · A321neo · 含餐點", type: "flight" },
         { t: "21:30", title: "抵達桃園機場 T2", type: "flight", tag: "台灣時間" }
       ]
@@ -717,6 +732,45 @@
       <div class="dim">${b.dim}</div>
       <div class="rule">${b.rule}</div>
     </div>`).join("");
+
+  // 入境提醒事項：warn = 違反會被罰或沒收的重點
+  const R = (t, d, warn = false, url = "") => ({ t, d, warn, url });
+  const RULES = [
+    { group: "出發前", items: [
+      R("護照", "台灣護照赴日免簽，可停留 90 天。出發前確認 6 人的護照效期，建議入境時還有 3 個月以上"),
+      R("駕照日文譯本", "每位要開車的人都要帶台灣駕照正本＋日文譯本，不用國際駕照。監理站臨櫃辦，每份 NT$100，幾分鐘就好", true),
+      R("Visit Japan Web", "先上網填好入境卡和海關申報，產生 QR code。不是強制，但那霸機場有電子申報閘門，通關比較快", false, "https://www.vjw.digital.go.jp/"),
+      R("插座", "日本 100V、A 型插座，和台灣一樣，不用帶轉接頭"),
+      R("小費", "日本沒有給小費的習慣")
+    ]},
+    { group: "登機・行動電源", items: [
+      R("只能手提", "行動電源不能託運，每人最多 2 個，建議只帶 100Wh 以下的", true),
+      R("機上不能用", "華航全程禁止在機上用行動電源或幫它充電；不要放頭頂置物櫃，放座椅口袋", true, "https://www.china-airlines.com/us/zh/fly/on-board/electronic-devices")
+    ]},
+    { group: "入境日本", items: [
+      R("肉製品一律不能帶", "肉乾、香腸、肉鬆、肉包、含肉月餅、料包含肉的泡麵都不行；最高罰 300 萬日圓或 3 年徒刑", true, "https://www.maff.go.jp/aqs/languages/bring_meat_cn_han.html"),
+      R("新鮮蔬果不能帶", "芒果、荔枝、柑橘、辣椒等；飛機餐的水果和三明治不要帶下飛機", true),
+      R("自用藥品", "處方藥 1 個月份、成藥 2 個月份、外用藥每種 24 個以內。長輩的常備藥和感冒藥請保留原包裝與成分說明"),
+      R("免稅額（每人）", "酒 3 瓶（每瓶約 760ml）、紙菸 200 支、其他物品 20 萬日圓；現金超過 100 萬日圓要申報"),
+      R("電子菸", "含尼古丁的菸油不建議帶")
+    ]},
+    { group: "購物退稅（2026/11 新制）", items: [
+      R("先付含稅價，出境時退", "同一家店同一天，未稅滿 5,000 日圓可退稅；結帳時出示護照", false, "https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00021.html"),
+      R("退稅商品不能在日本用掉", "食品、化妝品在日本吃掉或用掉就不退；同一張收據少一件，整張都不退", true),
+      R("託運行李「之前」辦", "那霸機場出境時，先到免稅機台（或用 Visit Japan Web）辦確認，行李託運後就不能辦了。有退稅商品要提早到機場", true)
+    ]},
+    { group: "回台灣", items: [
+      R("肉製品別帶回", "真空包裝的肉乾、含肉飯糰或三明治、溏心蛋、溫泉蛋都算；罰 NT$1 萬～100 萬。不確定就到檢疫櫃台問，主動詢問不罰", true, "https://web.customs.gov.tw/taipei/singlehtml/3130?cntId=cus2_177199_3130"),
+      R("新鮮水果、植物不能帶", "日本的水果再好吃也別帶回來", true),
+      R("免稅額（每人）", "酒 1.5 公升、紙菸 200 支、其他物品 NT$35,000"),
+      R("現金", "外幣（含日圓）等值 1 萬美元以上、新台幣 10 萬元以上要申報")
+    ]}
+  ];
+  document.getElementById("rules").innerHTML = RULES.map(g => `
+    <section class="rule-group">
+      <h3>${esc(g.group)}</h3>
+      <ul>${g.items.map(x => `<li class="${x.warn ? "warn" : ""}"><b>${esc(x.t)}</b>　${esc(x.d)}${x.url ? ` <a href="${x.url}" target="_blank" rel="noopener">官方說明 ↗</a>` : ""}</li>`).join("")}</ul>
+    </section>`).join("");
 
   // 附近可逛：景點旁的小店，收合在景點下面
   const mapUrl = q => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
