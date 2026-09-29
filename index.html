@@ -235,7 +235,7 @@
     .bag .name, .bag .dim, .bag .rule { grid-column: 2; }
   }
 
-  .infos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+  .infos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .info {
     background: var(--paper); border-radius: 18px; box-shadow: var(--shadow);
     padding: 12px 16px; display: flex; flex-direction: column; gap: 2px; min-width: 0;
@@ -389,8 +389,25 @@
 
   <nav class="days" aria-label="日程" id="dayNav"></nav>
 
+  <h2>入境提醒事項</h2>
+  <div class="infos">
+    <a class="info" href="https://www.vjw.digital.go.jp/" target="_blank" rel="noopener">
+      <span class="k">入境手續</span>
+      <b>Visit Japan Web ↗</b>
+      <small>入境審查與海關 QR code</small>
+    </a>
+    <div class="info">
+      <span class="k">日幣匯率</span>
+      <b id="jpyRate">載入中…</b>
+      <small id="jpyMeta">每天早上 8 點更新</small>
+    </div>
+  </div>
+
   <h2>航班 <span class="sub">時間皆為當地時間</span></h2>
   <div class="passes" id="passes"></div>
+
+  <h2>行李額度 <span class="sub">每人・去回程相同</span></h2>
+  <div class="bags" id="bags"></div>
 
   <h2>住宿 <span class="sub">3/25–3/28・3 晚</span></h2>
   <article class="hotel">
@@ -408,21 +425,6 @@
       <div><dt>車輛限制</dt><dd>高 2.1m、寬 1.9m、長 5.3m、重 2 噸以下；23:00–6:00 不能進出車</dd></div>
     </dl>
   </article>
-
-  <h2>行李額度 <span class="sub">每人・去回程相同</span></h2>
-  <div class="bags" id="bags"></div>
-  <div class="infos">
-    <a class="info" href="https://www.vjw.digital.go.jp/" target="_blank" rel="noopener">
-      <span class="k">入境手續</span>
-      <b>Visit Japan Web ↗</b>
-      <small>入境審查與海關 QR code</small>
-    </a>
-    <div class="info">
-      <span class="k">日幣匯率</span>
-      <b id="jpyRate">載入中…</b>
-      <small id="jpyMeta">每天早上 8 點更新</small>
-    </div>
-  </div>
 
   <h2>每日行程</h2>
   <div class="legend"><span><i class="f"></i>航班</span><span><i class="c"></i>美食・重點</span><span><i></i>行程</span><span><i class="p"></i>待安排</span></div>
