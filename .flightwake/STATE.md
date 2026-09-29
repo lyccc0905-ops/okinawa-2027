@@ -10,7 +10,7 @@ health: yellow   # 頁面渲染從未在瀏覽器實測；內容與資料已查�
 
 # 現在在哪
 
-沖繩 2027/3/25–3/28 行程網頁第一版已完成。唯一的檔案是 `index.html`，發佈在使用者的 claude.ai artifact（私人頁面，在使用者自己的 artifact 列表可以找到）。四天行程、營業時間、附近小店與甜點咖啡都填好了。住宿已訂 JR九州ホテル ブラッサム那覇，並獨立成「住宿」區塊。頁面上方順序為：入境提醒事項（含已查核的出入境規定）→ 航班 → 行李額度 → 住宿。Day 3 已拿掉美國村，晚餐改為那霸的うりずん。Day 4 改成提前 3 小時（17:55）到機場辦退稅，當天晚餐 16:00。國際通與機場有 Kitty 店家清單。使用者會繼續逐站修改或新增。
+沖繩 2027/3/25–3/28 行程網頁第一版已完成。原始檔是 `index.html`（claude.ai artifact 格式）。發佈在兩個地方：一是使用者私人的 claude.ai artifact；二是公開的 GitHub Pages（GitHub 帳號 lyccc0905-ops 的公開 repo `okinawa-2027`，從 main 分支的 `docs/` 發佈）。四天行程、營業時間、附近小店與甜點咖啡都填好了。住宿已訂 JR九州ホテル ブラッサム那覇，並獨立成「住宿」區塊。頁面上方順序為：入境提醒事項（含已查核的出入境規定）→ 航班 → 行李額度 → 住宿。Day 3 已拿掉美國村，晚餐改為那霸的うりずん。Day 4 改成提前 3 小時（17:55）到機場辦退稅，當天晚餐 16:00。國際通與機場有 Kitty 店家清單。使用者會繼續逐站修改或新增。
 
 # 進行中(未完成勿刪)
 
@@ -18,9 +18,11 @@ health: yellow   # 頁面渲染從未在瀏覽器實測；內容與資料已查�
 - [ ] 餐廳還沒訂位：ゆうなんぎい、Seaside Drive-in、うりずん（電話都在 `todos` 的 booking 那一項）
 - [ ] 還沒問飯店停車場能不能預約（寫在 `todos` 的 parking 那一項）
 - [ ] 使用者要逐站檢視行程，可能換掉或刪掉景點
-- [ ] 頁面渲染未實測（health 為 yellow 的原因）
+- [ ] 手機寬度的版面還沒實測（桌機版已在 2026-09-29 用瀏覽器從頭到尾檢查過，GitHub Pages 上線後也確認正常）
 
 # 下一步入口
+
+0. 每次改完 `index.html`：執行 `./build.sh` → commit → `git push origin HEAD:main`（用 lyccc0905-ops 帳號推送：`GH_TOKEN=$(gh auth token --user lyccc0905-ops)`，再加上 `-c credential.helper='!gh auth git-credential'`）；claude.ai 那份也要重新發佈。
 
 1. 使用者要改行程 → 改 `index.html` 裡 `<script>` 的 `days` 陣列。每個 event 有 t/title/note/hours/type/map/shops/cafes 欄位，店家資料在 `SHOPS`、`CAFES` 物件。改完重新發佈到同一個 artifact，再 commit。
 2. 新增店家或餐廳 → 先查證真實營業時間與公休日，並對照到訪的星期幾，再加進去。不要憑印象寫。
