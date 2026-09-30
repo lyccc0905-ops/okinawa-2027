@@ -8,6 +8,20 @@
 # 坑 Registry
 
 ---
+name: git-push-osxkeychain-wins-over-gh-helper
+type: gotcha
+status: active
+confidence: probable
+tags: [git, gh, 發佈, GitHub Pages]
+discovered: 2026-09-30
+---
+
+**症狀**：用 `GH_TOKEN=$(gh auth token --user lyccc0905-ops) git -c credential.helper='!gh auth git-credential' push origin HEAD:main` 推送，回傳 `remote: Permission to lyccc0905-ops/okinawa-2027.git denied to yuntian-source.` / `The requested URL returned error: 403`。
+**根因**：系統層 gitconfig（`/Library/Developer/CommandLineTools/usr/share/git-core/gitconfig`）已經設了 `credential.helper=osxkeychain`。`-c credential.helper=...` 只會加在清單後面，git 先問 osxkeychain，拿到另一個帳號 yuntian-source 存著的密碼就直接用了。只有「失敗一次、改法後成功一次」這一組對照。
+**繞法**：先用空字串清掉 helper 清單，再加 gh：`git -c credential.helper= -c credential.helper='!gh auth git-credential' push ...`。2026-09-30 用這個寫法推送成功（52328f3）。
+**佐證**：record [[260930-elder-friendly]]
+
+---
 name: svg-css-animation-overrides-transform
 type: gotcha
 status: active
