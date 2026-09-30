@@ -8,6 +8,34 @@
 # 坑 Registry
 
 ---
+name: svg-css-animation-overrides-transform
+type: gotcha
+status: active
+confidence: confirmed
+tags: [svg, css, 地圖版]
+discovered: 2026-09-29
+---
+
+**症狀**：`docs/map.html` 裡的鯨鯊、飛機、魚、帆船，全部畫在 SVG 的左上角（原點），沒有出現在指定的位置。
+**根因**：這些 `<g>` 同時有 `transform="translate(...)"` 屬性和 CSS 動畫 `.bob`（`transform: translateY`）。CSS 的 transform 會整個取代 SVG 的 transform 屬性。
+**解法/繞法**：拆成兩層：外層 `<g transform="translate(...)">` 負責位置，內層 `<g class="bob">` 負責動畫。改完重看，四個插圖都回到正確位置。
+**佐證**：commit 6173f58；record [[260930-pages-and-map]]
+
+---
+name: artifact-viewer-no-automated-scroll
+type: gotcha
+status: active
+confidence: probable
+tags: [claude-artifact, 瀏覽器自動化, 驗證]
+discovered: 2026-09-29
+---
+
+**症狀**：用 Chrome 自動化打開 claude.ai artifact 頁面，滑鼠滾輪、PageDown、點日期列的錨點都沒辦法捲動，只看得到第一個畫面。
+**根因**：artifact 的內容放在跨網域的框架裡，自動化的輸入和 JS 都碰不到裡面。這是推測，沒有做對照實驗。
+**繞法**：把 `index.html` 包成完整 HTML（跟 `build.sh` 做的事一樣），在本機用 `python3 -m http.server` 開起來，再用 `window.scrollTo({behavior:"instant"})` 跳到各區塊截圖。頁面本身有 `scroll-behavior: smooth`，不加 instant 的話，截圖會拍到捲動到一半的畫面。
+**佐證**：record [[260930-pages-and-map]]
+
+---
 name: japan-taxfree-refund-2026
 type: constraint
 status: active
