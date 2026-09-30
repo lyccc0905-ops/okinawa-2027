@@ -463,6 +463,9 @@
   <div class="legend"><span><i class="f"></i>航班</span><span><i class="c"></i>美食・重點</span><span><i></i>行程</span><span><i class="p"></i>待安排</span></div>
   <div id="days"></div>
 
+  <h2>待暫定行程 <span class="sub">要爬坡或走很久，長輩不方便，先移出行程</span></h2>
+  <section class="day pending-list"><ol class="tl" id="pending"></ol></section>
+
   <h2>出發前待辦 <span class="sub">勾選會記在這台裝置</span></h2>
   <div class="todo" id="todo"></div>
 
@@ -645,16 +648,14 @@
 
   const days = [
     {
-      date: "2027-03-25", title: "南部・那霸",
+      date: "2027-03-25", title: "瀨長島・那霸",
       events: [
         { t: "06:10", title: "抵達桃園機場 T2", note: "建議起飛前 2 小時到，辦理報到與托運", tag: "台灣時間", type: "alert" },
         { t: "08:10", title: "CI120 起飛 → 那霸", note: "經濟艙 · A321neo · 含餐點", type: "flight" },
         { t: "10:50", title: "抵達那霸機場", note: "入境、領行李", type: "flight" },
         { t: "11:40", title: "取車", note: "搭租車公司接駁車到營業所，辦手續約 30–60 分鐘", type: "alert" },
-        { t: "12:30", title: "瀨長島 Umikaji Terrace", note: "機場旁的白色小島，海景餐廳、甜點一排，吃午餐順便看飛機起降（車程約 15 分）", hours: "餐廳 11:00–21:00・無公休（天候不佳可能停業）", type: "food", map: "瀬長島ウミカジテラス", shops: SHOPS.umikaji, cafes: CAFES.umikaji },
-        { t: "14:15", title: "齋場御嶽", note: "世界遺產、琉球最神聖的祭祀場所，走一圈約 1 小時；石板路有坡，穿好走的鞋。先到「綠之館 Sefa」買票（車程約 40 分）", hours: "9:00–18:00・17:15 停止售票・農曆 5/1–3、10/1–3 休息", map: "斎場御嶽" },
-        { t: "15:20", title: "知念岬公園", note: "就在齋場御嶽旁，海岬步道看久高島與太平洋", hours: "戶外公園", map: "知念岬公園", cafes: CAFES.nanjo },
-        { t: "16:15", title: "入住 JR九州ホテル ブラッサム那覇", note: "國際通旁，走路 1 分就到國際通。車停飯店的機械式停車場：¥1,500／晚、限高 2.1m、重 2 噸，23:00–6:00 不能進出車（車程約 40–50 分）", hours: "入住 15:00・退房 11:00", type: "alert", map: "JR九州ホテル ブラッサム那覇" },
+        { t: "12:30", title: "瀨長島 Umikaji Terrace", note: "機場旁的白色小島，海景餐廳、甜點一排，吃午餐順便看飛機起降，吃完在甜點店坐著慢慢休息（車程約 15 分）", hours: "餐廳 11:00–21:00・無公休（天候不佳可能停業）", type: "food", map: "瀬長島ウミカジテラス", shops: SHOPS.umikaji, cafes: CAFES.umikaji },
+        { t: "15:00", title: "入住 JR九州ホテル ブラッサム那覇", note: "國際通旁，走路 1 分就到國際通。15:00 一開放就入住，長輩先回房休息到晚餐。車停飯店的機械式停車場：¥1,500／晚、限高 2.1m、重 2 噸，23:00–6:00 不能進出車（從瀨長島車程約 25–30 分）", hours: "入住 15:00・退房 11:00", type: "alert", map: "JR九州ホテル ブラッサム那覇" },
         { t: "17:00", title: "晚餐：ゆうなんぎい", note: "國際通旁的老字號沖繩家庭料理，苦瓜炒什錦、滷豬腳、紅芋天婦羅。能不能訂位各家說法不一，先打電話 098-867-3765；訂不到就開門時到。從飯店走路約 15 分", hours: "17:00–21:30・週日與國定假日公休", type: "food", map: "ゆうなんぎい 那覇" },
         { t: "18:30", title: "逛國際通・第一牧志公設市場", note: "步行即到。3/28 週日市場公休，想看市場就今晚來；伴手禮、紅芋塔、Blue Seal 冰淇淋。飯店就在國際通上，長輩累了可以先回去休息", hours: "市場 8:00–22:00・每月第 4 個週日公休", map: "第一牧志公設市場", shops: SHOPS.kokusaiNight, cafes: CAFES.kokusaiNight, kitty: KITTY.kokusai }
       ]
@@ -663,10 +664,9 @@
       date: "2027-03-26", title: "北部・美ら海",
       events: [
         { t: "08:00", title: "從那霸出發", note: "走沖繩自動車道到許田 IC，全程約 2 小時。早餐可以先買麵包帶上車，或吃飯店自助早餐（6:30 開始、另外付費，1F Barbaresco 37）", type: "alert", cafes: CAFES.earlyBread },
-        { t: "10:00", title: "沖繩美麗海水族館", note: "黑潮之海的鯨鯊必看；海洋博公園的海豚表演免費，約 10:30、11:30、13:00、15:00 各一場", hours: "8:30–18:30・17:30 最後入館・無公休", map: "沖縄美ら海水族館", shops: SHOPS.motobu, cafes: CAFES.aquarium },
+        { t: "10:00", title: "沖繩美麗海水族館", note: "黑潮之海的鯨鯊必看；館內有電梯，大水槽前有座位可以坐著看。海洋博公園的海豚表演免費，約 10:30、11:30、13:00、15:00 各一場", hours: "8:30–18:30・17:30 最後入館・無公休", map: "沖縄美ら海水族館", shops: SHOPS.motobu, cafes: CAFES.aquarium },
         { t: "12:30", title: "午餐：岸本食堂", note: "創業百年的沖繩麵老店，柴火湯頭＋手打麵，搭配炊飯；中午常排隊（車程約 15 分）", hours: "11:00–17:00（賣完提早收）・週三公休", type: "food", map: "きしもと食堂 本部町", cafes: CAFES.kishimoto },
-        { t: "13:45", title: "備瀨福木林道", note: "水族館旁的老聚落，福木樹隧道通到海邊，平路好走", hours: "戶外聚落", map: "備瀬のフクギ並木", cafes: CAFES.bise },
-        { t: "15:00", title: "古宇利大橋・古宇利島", note: "開上跨海大橋，心形岩（Tinu 海灘）拍照（車程約 30 分）", hours: "戶外", map: "古宇利大橋", shops: SHOPS.kouri, cafes: CAFES.kouri },
+        { t: "14:00", title: "古宇利大橋・古宇利島", note: "開車過跨海大橋，在島上的小店和海景咖啡坐著休息（車程約 30 分）", hours: "戶外", map: "古宇利大橋", shops: SHOPS.kouri, cafes: CAFES.kouri },
         { t: "17:15", title: "晚餐：Seaside Drive-in", note: "恩納村 1967 年開業的美式餐廳，招牌濃湯與塔可飯；6 人先打 098-964-2272 問訂位（車程約 50 分）", hours: "9:00–21:00・週三公休", type: "food", map: "シーサイドドライブイン 恩納村" },
         { t: "18:30", title: "萬座毛看夕陽", note: "象鼻岩海崖，車程約 10 分；日落約 18:45，步道平緩，門票 ¥100", hours: "8:00–20:00・無公休", map: "万座毛" },
         { t: "19:10", title: "回那霸", note: "走高速約 1 小時；飯店停車場 23:00 後不能進出車" }
@@ -675,12 +675,11 @@
     {
       date: "2027-03-27", title: "中部・海中道路・港川",
       events: [
-        { t: "09:00", title: "首里城公園", note: "正殿 2026/11/23 重新開放；進正殿要先上網預約 30 分鐘時段（一個月前開放），其他區域不用預約", hours: "付費區 8:30–18:00・17:30 最後入場", map: "首里城公園", shops: SHOPS.shuri, cafes: CAFES.shuri },
+        { t: "10:00", title: "從那霸出發", note: "前一天跑北部比較累，早上睡飽、慢慢吃早餐再出發", type: "alert" },
         { t: "11:00", title: "午餐：King Tacos 金武本店", note: "塔可飯的發源地，分量很大，可以兩人分一份（車程約 50 分）", hours: "10:30–21:00・無公休", type: "food", map: "キングタコス 金武本店" },
         { t: "12:15", title: "海中道路", note: "跨海的長直路，中途「海之驛 Ayahashi 館」可以停車看海，停一下拍照就好（車程約 30 分）", hours: "Ayahashi 館 9:00–17:30", map: "海中道路", cafes: CAFES.kaichu },
-        { t: "12:45", title: "宮城島 Nuchi Masu 製鹽所", note: "每整點與半點有免費導覽，後方「果報崖」是絕景海崖", hours: "9:00–17:30・無公休", map: "ぬちうなー", cafes: CAFES.miyagi },
-        { t: "14:15", title: "勝連城跡", note: "世界遺產，城牆上可以看整片中城灣；上坡路段可視體力走一半；不用趕，慢慢逛（車程約 25 分）", hours: "9:00–18:00・17:30 停止售票・無公休", map: "勝連城跡" },
-        { t: "15:45", title: "港川外人住宅", note: "美軍舊宿舍改成的小店街，街道以美國州名命名，平路好逛；各店門口停車位少，大車停附近投幣停車場（車程約 45 分）", hours: "多數店家約 11:00–18:00，公休日各店不同", map: "港川ステイツサイドタウン", shops: SHOPS.minatogawa, cafes: CAFES.minatogawa },
+        { t: "12:45", title: "宮城島 Nuchi Masu 製鹽所", note: "每整點與半點有免費導覽，工廠內平路好走；後方「果報崖」要走一段坡，長輩可以在 2 樓咖啡坐著看海", hours: "9:00–17:30・無公休", map: "ぬちうなー", cafes: CAFES.miyagi },
+        { t: "15:00", title: "港川外人住宅", note: "美軍舊宿舍改成的小店街，街道以美國州名命名，平路好逛，累了就進咖啡店坐；各店門口停車位少，大車停附近投幣停車場（車程約 1 小時）", hours: "多數店家約 11:00–18:00，公休日各店不同", map: "港川ステイツサイドタウン", shops: SHOPS.minatogawa, cafes: CAFES.minatogawa },
         { t: "16:55", title: "回飯店停車", note: "從港川開回飯店約 20–25 分，車停好後走路去吃晚餐", type: "alert", map: "JR九州ホテル ブラッサム那覇" },
         { t: "17:30", title: "晚餐：うりずん", note: "1972 年創業的古酒與琉球料理老店，どぅる天發源店、食べログ百名店；17:30 準時開門。先電話 098-885-2178 訂位，指定 1 樓桌席（2 樓是要坐地上的榻榻米）。從飯店走路約 15 分", hours: "17:30–24:00・無公休", type: "food", map: "うりずん 那覇 安里 栄町", alts: DINNER_ALT },
         { t: "19:00", title: "自由時間", note: "回飯店休息，或到國際通散步" }
@@ -705,10 +704,19 @@
     }
   ];
 
+  // 待暫定行程：要爬坡、爬階梯或走很久，長輩不方便，先移出每日行程；想放回去再挪回 days
+  const pendingSpots = [
+    { t: "DAY 1", title: "齋場御嶽", note: "原排 3/25 14:15。世界遺產，走一圈約 1 小時，石板路有坡", hours: "9:00–18:00・17:15 停止售票・農曆 5/1–3、10/1–3 休息", map: "斎場御嶽" },
+    { t: "DAY 1", title: "知念岬公園", note: "原排 3/25 15:20。從停車場走到海岬是一段下坡，回程要爬上來", hours: "戶外公園", map: "知念岬公園", cafes: CAFES.nanjo },
+    { t: "DAY 2", title: "備瀨福木林道", note: "原排 3/26 13:45。路是平的，但要一直走；有水牛車可以坐", hours: "戶外聚落", map: "備瀬のフクギ並木", cafes: CAFES.bise },
+    { t: "DAY 2", title: "古宇利島 心形岩（Tinu 海灘）", note: "原本在古宇利島行程裡。要從停車場走一段路和階梯下到沙灘", hours: "戶外", map: "ティーヌ浜" },
+    { t: "DAY 3", title: "首里城公園", note: "原排 3/27 09:00。城在山丘上，坡道和石階多；正殿 2026/11/23 重新開放，要先上網預約時段", hours: "付費區 8:30–18:00・17:30 最後入場", map: "首里城公園", shops: SHOPS.shuri, cafes: CAFES.shuri },
+    { t: "DAY 3", title: "勝連城跡", note: "原排 3/27 14:15。世界遺產，城牆在山頂，上坡路又陡又長", hours: "9:00–18:00・17:30 停止售票・無公休", map: "勝連城跡" }
+  ];
+
   const todos = [
     { id: "parking", text: "打電話給飯店，確認機械式停車場能不能先預約", why: "JR九州ホテル ブラッサム那覇，限高 2.1m、寬 1.9m、長 5.3m、重 2 噸" },
     { id: "booking", text: "餐廳訂位：ゆうなんぎい 3/25 17:00（098-867-3765）、Seaside Drive-in 3/26 17:15（098-964-2272）、うりずん 3/27 17:30 1 樓桌席（098-885-2178）", why: "6 人一桌很難現場排，能訂位的先訂" },
-    { id: "shuri", text: "2 月底預約首里城正殿：3/27 09:00 時段、6 人", why: "官網線上預約，一個月前開放" },
     { id: "car", text: "預約租車：8 人座 Noah／Voxy／Serena 這類車", why: "要停得進飯店停車場（高 2.1m、重 2 噸以下），Alphard、Hiace 停不進去；3/25 機場取車、3/28 機場還車；每位駕駛都要帶台灣駕照正本＋日文譯本" },
     { id: "tickets", text: "預買美麗海水族館門票", why: "網路或便利商店買，現場少排一次隊" },
     { id: "esim", text: "網路：eSIM / 網卡" },
@@ -812,21 +820,24 @@
       </ul>
     </details>`;
 
-  document.getElementById("days").innerHTML = days.map((d, i) => `
-    <section class="day" id="day${i + 1}">
-      <div class="day-head"><span class="num">DAY ${i + 1}</span><h3>${esc(d.title)}</h3><span class="date">${md(d.date)} (${wd(d.date)})</span></div>
-      <ol class="tl">${d.events.map(e => `
+  const evHtml = e => `
         <li class="ev ${e.type || ""}">
           <div class="t">${esc(e.t)}</div>
           <div class="body"><div class="title">${esc(e.title)}${e.tag ? `<span class="tag">${esc(e.tag)}</span>` : ""}</div>${e.note ? `<div class="note">${esc(e.note)}</div>` : ""}${e.hours ? `<div class="hours">營業 ${esc(e.hours)}</div>` : ""}${e.shops ? shopsHtml(e.shops) : ""}${e.cafes ? shopsHtml(e.cafes, "甜點・咖啡", "cafes") : ""}${e.alts ? shopsHtml(e.alts, "其他晚餐選擇", "cafes") : ""}${e.kitty ? shopsHtml(e.kitty, "Kitty・Sanrio", "kitty") : ""}${e.map ? `<a class="map" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.map)}" target="_blank" rel="noopener">地圖 ↗</a>` : ""}</div>
-        </li>`).join("")}
+        </li>`;
+
+  document.getElementById("days").innerHTML = days.map((d, i) => `
+    <section class="day" id="day${i + 1}">
+      <div class="day-head"><span class="num">DAY ${i + 1}</span><h3>${esc(d.title)}</h3><span class="date">${md(d.date)} (${wd(d.date)})</span></div>
+      <ol class="tl">${d.events.map(evHtml).join("")}
       </ol>
     </section>`).join("");
+  document.getElementById("pending").innerHTML = pendingSpots.map(e => evHtml({ ...e, type: "pending" })).join("");
 
   // 高亮目前看到的那一天
   // 點日期時直接鎖定那一天，等捲動停下才恢復跟著捲動更新，避免滑過中間幾天時亂跳
   const navLinks = [...document.querySelectorAll("#dayNav a")];
-  const daySecs = [...document.querySelectorAll(".day")];
+  const daySecs = [...document.querySelectorAll("#days .day")];
   const nav = document.getElementById("dayNav");
   const setOn = id => navLinks.forEach(a => a.classList.toggle("on", a.hash === "#" + id));
   let lockUntilIdle = false, idleTimer = 0, ticking = false;
