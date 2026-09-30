@@ -4,7 +4,7 @@ session: Claude Code session 2026-09-30～10-01
 date: 2026-10-01
 repos: [行程表/沖繩3-25-3-28]
 tests: 無測試套件；兩頁的 JS 用 node `new Function()` 檢查語法通過；本機瀏覽器看過地圖版的那霸放大圖（達摩寺）
-prod_changes: GitHub Pages 重建（ede646b、3590371）；claude.ai artifact 第 34、35 版
+prod_changes: GitHub Pages 重建（ede646b、3590371、b16b302）；claude.ai artifact 第 34–36 版
 ---
 
 # Day 3 早上加達摩寺；Day 4 拿掉 iias，晚餐改 AEON 那霸店
@@ -18,7 +18,7 @@ prod_changes: GitHub Pages 重建（ede646b、3590371）；claude.ai artifact �
 
 ## 交付 / Commits
 
-0074882..3590371
+0074882..b16b302（最後一個 commit：Day 4 早上長輩可以留在飯店休息、保留波上宮）
 
 ## 驗證證據
 
