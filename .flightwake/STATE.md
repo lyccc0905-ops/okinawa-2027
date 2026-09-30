@@ -1,7 +1,7 @@
 ---
 updated: 2026-09-30
 updated_by: Claude Code session 2026-09-30
-latest_record: records/260930-elder-friendly.md
+latest_record: records/260930-parco-daikoku.md
 health: yellow   # 桌機版已實測；手機寬度未實測
 ---
 <!-- flightwake STATE — 永遠短、永遠新。新 session 的第一站。 -->
@@ -16,6 +16,7 @@ health: yellow   # 桌機版已實測；手機寬度未實測
 
 - [ ] 租車還沒訂：一定要選停得進飯店機械式停車場的車（高 2.1m、重 2 噸以下），例如 Noah／Voxy
 - [ ] 餐廳還沒訂位：ゆうなんぎい、Seaside Drive-in、うりずん（電話都在 `todos` 的 booking 那一項）
+- [ ] 大國藥妝小祿站前店（Day 4）的停車位還沒確認（098-891-8444）
 - [ ] 還沒問飯店停車場能不能預約（寫在 `todos` 的 parking 那一項）
 - [ ] 使用者要逐站檢視行程，可能換掉或刪掉景點，或從「待暫定行程」挑回來（挪回 `days`，同時補回 map.html 的 `DAYS`）
 - [ ] 手機寬度的版面還沒實測（桌機版已在 2026-09-29 用瀏覽器從頭到尾檢查過，GitHub Pages 上線後也確認正常）
