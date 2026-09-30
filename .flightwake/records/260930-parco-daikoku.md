@@ -9,7 +9,7 @@ prod_changes: GitHub Pages 重建（448a8b1）；claude.ai artifact 第 32 版
 
 # 加入 PARCO CITY 和大國藥妝小祿站前店
 
-**TL;DR**：使用者給了兩個 Google 地圖短網址，要把 PARCO CITY 和一定要逛的大國藥妝排進行程。PARCO CITY 排在 Day 3，大國藥妝排在 Day 4。行程表、地圖版和兩個發佈點都已更新。
+**TL;DR**：使用者給了兩個 Google 地圖短網址，要把 PARCO CITY 和一定要逛的大國藥妝排進行程。PARCO CITY 排在 Day 3，大國藥妝排在 Day 4。行程表、地圖版和兩個發佈點都已更新。之後使用者要求拿掉港川外人住宅，PARCO 延長到 16:30，然後直接回飯店（見 DECISIONS）。
 
 ## 關鍵發現（重要性排序）
 
@@ -18,7 +18,7 @@ prod_changes: GitHub Pages 重建（448a8b1）；claude.ai artifact 第 32 版
 
 ## 交付 / Commits
 
-c95b9a0..448a8b1
+c95b9a0..HEAD（港川那次改動是 record 之後的下一個 commit）
 
 ## 驗證證據
 
